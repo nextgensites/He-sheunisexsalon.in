@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "He & She Unisex Salon"
+version = "1.0.0"
+id = "artifacts/he-and-she-salon"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22962
+
+[services.development]
+run = "pnpm --filter @workspace/he-and-she-salon run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/he-and-she-salon", "run", "build" ]
+publicDir = "artifacts/he-and-she-salon/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22962"
+BASE_PATH = "/"

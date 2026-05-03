@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>He &amp; She Unisex Salon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #c9a96e;
+      --gold-light: #e2c99a;
+      --rose:       #b76e79;
+      --rose-light: #d4949f;
+      --black:      #0a0a0a;
+      --black2:     #111111;
+      --black3:     #181818;
+      --black4:     #222222;
+      --white:      #f5f0eb;
+      --muted:      #888;
+      --font-head:  'Playfair Display', Georgia, serif;
+      --font-body:  'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    @media (hover: none) { body { cursor: auto; } #cursor-dot, #cursor-ring { display: none; } }
+
+    ::selection { background: var(--gold); color: var(--black); }
+
+    /* ─── CURSOR ─── */
+    #cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s, background 0.2s;
+      will-change: left, top;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(201,169,110,0.55);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, border-color 0.2s;
+      will-change: left, top;
+    }
+
+    /* ─── PARTICLE CANVAS ─── */
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 5vw;
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s, padding 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(201,169,110,0.12);
+      padding-top: 0.9rem; padding-bottom: 0.9rem;
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo .he  { color: var(--gold); }
+    .nav-logo .she { color: var(--rose); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(245,240,235,0.55);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+      cursor: none;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid rgba(201,169,110,0.6);
+      color: var(--gold);
+      padding: 0.5rem 1.3rem;
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      z-index: -1;
+    }
+    .nav-cta:hover { color: var(--black); border-color: var(--gold); }
+    .nav-cta:hover::before { transform: translateX(0); }
+
+    /* burger */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-burger span { display: block; width: 24px; height: 1.5px; background: var(--gold); transition: all 0.3s; }
+
+    @media(max-width: 820px){
+      .nav-links, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(10,10,10,0.98);
+        backdrop-filter: blur(20px);
+        padding: 2rem 5vw 2.5rem;
+        gap: 1.5rem;
+        border-top: 1px solid rgba(201,169,110,0.1);
+      }
+      .nav-links.open a { font-size: 1rem; }
+    }
+
+    /* ─── SECTION REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(201,169,110,0.28);
+      padding-bottom: 0.35rem;
+    }
+
+    .gold-divider {
+      width: 56px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.4rem auto;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 0 5vw;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .hero-bg-layer {
+      position: absolute;
+      inset: -25%;
+      background:
+        radial-gradient(ellipse 55% 60% at 28% 42%, rgba(201,169,110,0.075) 0%, transparent 70%),
+        radial-gradient(ellipse 48% 52% at 74% 65%, rgba(183,110,121,0.07) 0%, transparent 70%);
+      will-change: transform;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(4.5rem, 14vw, 13rem);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.025em;
+      will-change: transform;
+    }
+    .hero-he   { color: var(--gold); display: block; }
+    .hero-amp  { color: rgba(245,240,235,0.14); font-size: 0.36em; display: block; line-height: 1.7; }
+    .hero-she  { color: var(--rose); display: block; }
+
+    .hero-tagline {
+      margin-top: 1.8rem;
+      font-size: clamp(0.78rem, 2.2vw, 1rem);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(245,240,235,0.42);
+      will-change: transform;
+    }
+
+    .hero-cta {
+      margin-top: 2.8rem;
+      display: inline-block;
+      position: relative;
+      padding: 1rem 3.2rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: none;
+      overflow: hidden;
+      transition: color 0.38s;
+    }
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      z-index: -1;
+    }
+    .hero-cta:hover { color: var(--black); }
+    .hero-cta:hover::before { transform: translateX(0); }
+
+    /* shimmer on cta */
+    .shimmer { position: relative; overflow: hidden; }
+    .shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -110%;
+      width: 65%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);
+      animation: shimmer-anim 3.5s infinite;
+    }
+    @keyframes shimmer-anim { 0%{ left:-110% } 100%{ left:210% } }
+
+    /* floating SVGs */
+    .hero-scissors {
+      position: absolute;
+      width: clamp(140px, 18vw, 280px);
+      opacity: 0.16;
+      right: 7vw; top: 22%;
+      animation: sc-float 9s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+      will-change: transform;
+    }
+    @keyframes sc-float {
+      0%,100%{ transform: rotate(0deg) translateY(0); }
+      30%    { transform: rotate(10deg) translateY(-20px); }
+      70%    { transform: rotate(-6deg) translateY(10px); }
+    }
+    .hero-comb {
+      position: absolute;
+      width: clamp(100px, 14vw, 200px);
+      opacity: 0.11;
+      left: 5vw; bottom: 26%;
+      animation: cb-float 12s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+      will-change: transform;
+    }
+    @keyframes cb-float {
+      0%,100%{ transform: rotate(-18deg) translateY(0) translateX(0); }
+      40%    { transform: rotate(-10deg) translateY(-26px) translateX(10px); }
+      75%    { transform: rotate(-24deg) translateY(14px) translateX(-6px); }
+    }
+
+    /* orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: orb-drift 16s ease-in-out infinite;
+      will-change: transform;
+      z-index: 1;
+    }
+    .orb-1 { width: 400px; height: 400px; background: radial-gradient(circle,rgba(201,169,110,0.04),transparent 70%); border: 1px solid rgba(201,169,110,0.07); top: 6%; left: -10%; animation-delay: 0s; }
+    .orb-2 { width: 280px; height: 280px; background: radial-gradient(circle,rgba(183,110,121,0.04),transparent 70%); border: 1px solid rgba(183,110,121,0.07); bottom: 12%; right: 2%; animation-delay: -6s; }
+    .orb-3 { width: 150px; height: 150px; background: radial-gradient(circle,rgba(201,169,110,0.06),transparent 70%); border: 1px solid rgba(201,169,110,0.1); top: 48%; left: 46%; animation-delay: -10s; animation-duration: 10s; }
+    @keyframes orb-drift {
+      0%,100%{ transform:translate(0,0) scale(1); }
+      33%    { transform:translate(26px,-32px) scale(1.06); }
+      66%    { transform:translate(-18px,20px) scale(0.95); }
+    }
+
+    /* scroll line */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      color: rgba(245,240,235,0.25);
+      font-size: 0.64rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      z-index: 4;
+    }
+    .scroll-indicator::after {
+      content: '';
+      display: block;
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(201,169,110,0.55), transparent);
+      animation: sc-pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes sc-pulse {
+      0%,100%{ opacity:0.4; transform:scaleY(1); }
+      50%    { opacity:1;   transform:scaleY(1.25); }
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 9rem 5vw;
+      background: var(--black2);
+      position: relative;
+      z-index: 2;
+    }
+    .services-header { text-align:center; margin-bottom: 4.5rem; }
+    .services-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .services-title em { font-style:italic; color:var(--gold); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--black3);
+      border: 1px solid rgba(201,169,110,0.08);
+      padding: 2.8rem 2.2rem 2.4rem;
+      position: relative;
+      cursor: none;
+      transform-style: preserve-3d;
+      transition: box-shadow 0.4s, border-color 0.4s;
+      perspective: 800px;
+    }
+    .service-card::before {
+      content:'';
+      position:absolute; inset:0;
+      background: linear-gradient(135deg,rgba(201,169,110,0.025) 0%,transparent 55%);
+      opacity:0; transition:opacity 0.4s;
+    }
+    .service-card:hover { box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,169,110,0.18); border-color:rgba(201,169,110,0.22); }
+    .service-card:hover::before { opacity:1; }
+
+    .service-icon { width:50px; height:50px; margin-bottom:1.8rem; }
+    .service-name {
+      font-family:var(--font-head);
+      font-size:1.55rem;
+      font-weight:700;
+      margin-bottom:0.9rem;
+    }
+    .service-card:nth-child(1) .service-name { color:var(--gold); }
+    .service-card:nth-child(2) .service-name { color:var(--rose); }
+    .service-card:nth-child(3) .service-name { color:var(--gold-light); }
+
+    .service-desc {
+      font-size:0.86rem;
+      line-height:1.78;
+      color:rgba(245,240,235,0.46);
+      margin-bottom:1.8rem;
+    }
+    .service-items { list-style:none; display:flex; flex-direction:column; gap:0.65rem; }
+    .service-items li {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:0.82rem;
+      color:rgba(245,240,235,0.6);
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      padding-bottom:0.65rem;
+    }
+    .service-items li:last-child { border-bottom:none; padding-bottom:0; }
+    .service-items li span { color:var(--gold); font-size:0.76rem; }
+
+    .card-bar {
+      position:absolute; bottom:0; left:0; right:0; height:2px;
+      transform:scaleX(0); transform-origin:left;
+      transition:transform 0.42s ease;
+    }
+    .service-card:nth-child(1) .card-bar { background:var(--gold); }
+    .service-card:nth-child(2) .card-bar { background:var(--rose); }
+    .service-card:nth-child(3) .card-bar { background:var(--gold-light); }
+    .service-card:hover .card-bar { transform:scaleX(1); }
+
+    /* ─── GALLERY ─── */
+    #gallery {
+      padding: 9rem 5vw;
+      background: var(--black);
+      position:relative; z-index:2;
+    }
+    .gallery-header { text-align:center; margin-bottom:4rem; }
+    .gallery-title {
+      font-family:var(--font-head);
+      font-size:clamp(2rem,4.5vw,3.6rem);
+      font-weight:700;
+    }
+    .gallery-title em { font-style:italic; color:var(--rose); }
+
+    .masonry {
+      columns: 3;
+      column-gap: 1.1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media(max-width:860px){ .masonry { columns:2; } }
+    @media(max-width:520px){ .masonry { columns:1; } }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1.1rem;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      transition: box-shadow 0.4s;
+      will-change: transform;
+    }
+    .masonry-item:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+    .gallery-box {
+      width:100%;
+      display:block;
+      position:relative;
+      overflow:hidden;
+      transition: transform 0.5s cubic-bezier(0.25,0.8,0.25,1);
+    }
+    .masonry-item:hover .gallery-box { transform:scale(1.04); }
+
+    .gallery-overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(to top,rgba(10,10,10,0.7) 0%,transparent 50%);
+      opacity:0; transition:opacity 0.38s;
+    }
+    .masonry-item:hover .gallery-overlay { opacity:1; }
+
+    .gallery-label {
+      position:absolute;
+      bottom:0; left:0; right:0;
+      padding:1rem;
+      font-family:var(--font-head);
+      font-size:0.92rem;
+      font-style:italic;
+      color:var(--gold-light);
+      transform:translateY(8px);
+      opacity:0;
+      transition:opacity 0.35s, transform 0.35s;
+      z-index:2;
+    }
+    .masonry-item:hover .gallery-label { opacity:1; transform:translateY(0); }
+
+    .gallery-placeholder-inner {
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:1rem;
+      font-family:var(--font-head);
+      font-style:italic;
+      font-size:0.88rem;
+      color:rgba(201,169,110,0.22);
+      letter-spacing:0.06em;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 9rem 5vw;
+      background: var(--black2);
+      position:relative; z-index:2;
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    @media(max-width:800px){ .about-inner { grid-template-columns:1fr; gap:3.5rem; } }
+
+    .about-heading {
+      font-family:var(--font-head);
+      font-size:clamp(1.9rem,4vw,3rem);
+      font-weight:700;
+      line-height:1.2;
+      margin-bottom:1.5rem;
+    }
+    .about-heading em { font-style:italic; color:var(--gold); }
+    .about-text {
+      font-size:0.9rem;
+      line-height:1.9;
+      color:rgba(245,240,235,0.52);
+      margin-bottom:1.3rem;
+    }
+    .about-stats { display:flex; gap:2.5rem; margin-top:2.5rem; flex-wrap:wrap; }
+    .stat-num {
+      font-family:var(--font-head);
+      font-size:2.6rem;
+      font-weight:900;
+      color:var(--gold);
+      line-height:1;
+    }
+    .stat-label {
+      font-size:0.68rem;
+      letter-spacing:0.13em;
+      text-transform:uppercase;
+      color:rgba(245,240,235,0.35);
+      margin-top:0.3rem;
+    }
+
+    /* animated 3D orb */
+    .orb-scene {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    .about-orb {
+      width:clamp(240px,28vw,340px);
+      height:clamp(240px,28vw,340px);
+      border-radius:50%;
+      position:relative;
+      animation: orb-spin 22s linear infinite;
+    }
+    @keyframes orb-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .orb-ring {
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(201,169,110,0.2);
+      animation: orb-pulse 6s ease-in-out infinite;
+    }
+    .orb-ring:nth-child(1){ inset:0; animation-delay:0s; }
+    .orb-ring:nth-child(2){ inset:-26px; border-color:rgba(183,110,121,0.13); animation-delay:-2s; animation-direction:reverse; }
+    .orb-ring:nth-child(3){ inset:-52px; border-color:rgba(201,169,110,0.07); animation-delay:-4s; }
+    @keyframes orb-pulse {
+      0%,100%{ transform:scale(1); opacity:0.8; }
+      50%    { transform:scale(1.04); opacity:0.35; }
+    }
+    .orb-core {
+      position:absolute;
+      inset:18%;
+      border-radius:50%;
+      background: radial-gradient(circle at 38% 36%, rgba(201,169,110,0.28) 0%, rgba(183,110,121,0.12) 45%, transparent 70%);
+      box-shadow: 0 0 90px rgba(201,169,110,0.1), inset 0 0 60px rgba(183,110,121,0.08);
+    }
+    .orb-dot {
+      position:absolute;
+      width:5px; height:5px;
+      border-radius:50%;
+      top:50%; left:50%;
+      margin:-2.5px 0 0 -2.5px;
+      animation: dot-orbit 9s linear infinite;
+    }
+    .orb-dot:nth-child(4){ background:var(--gold); animation-delay:0s; }
+    .orb-dot:nth-child(5){ background:var(--rose); animation-delay:-3s; }
+    .orb-dot:nth-child(6){ background:var(--gold-light); animation-delay:-6s; }
+    @keyframes dot-orbit {
+      0%  { transform: rotate(0deg)   translateX(var(--orb-r,135px)) scale(1);   opacity:0.9; }
+      50% { transform: rotate(180deg) translateX(var(--orb-r,135px)) scale(0.4); opacity:0.25; }
+      100%{ transform: rotate(360deg) translateX(var(--orb-r,135px)) scale(1);   opacity:0.9; }
+    }
+
+    /* ─── BOOKING ─── */
+    #booking {
+      padding: 9rem 5vw;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 100%, rgba(201,169,110,0.055) 0%,transparent 70%),
+        var(--black);
+      position:relative; z-index:2;
+    }
+    .booking-inner { max-width:660px; margin:0 auto; text-align:center; }
+    .booking-title {
+      font-family:var(--font-head);
+      font-size:clamp(2rem,4.5vw,3.4rem);
+      font-weight:700;
+      margin-bottom:0.7rem;
+    }
+    .booking-title em { font-style:italic; color:var(--rose); }
+    .booking-sub {
+      font-size:0.88rem;
+      color:rgba(245,240,235,0.4);
+      margin-bottom:3.5rem;
+      letter-spacing:0.04em;
+    }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.1rem;
+    }
+    @media(max-width:580px){ .form-grid { grid-template-columns:1fr; } }
+
+    .form-group { display:flex; flex-direction:column; gap:0.45rem; text-align:left; }
+    .form-group.full { grid-column:1/-1; }
+    .form-group label {
+      font-size:0.68rem;
+      letter-spacing:0.15em;
+      text-transform:uppercase;
+      color:rgba(245,240,235,0.4);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--black3);
+      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--white);
+      padding: 0.88rem 1.05rem;
+      font-family: var(--font-body);
+      font-size: 0.87rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none;
+      width:100%;
+    }
+    .form-group select {
+      cursor:none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position:right 1rem center;
+      padding-right:2.5rem;
+    }
+    .form-group select option { background:var(--black3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color:rgba(201,169,110,0.5);
+      box-shadow:0 0 0 3px rgba(201,169,110,0.07);
+    }
+    .form-group input::placeholder { color:rgba(245,240,235,0.18); }
+    .form-group textarea { resize:vertical; min-height:88px; }
+    input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(0.55) sepia(1) saturate(2) hue-rotate(5deg); cursor:pointer; }
+
+    .form-submit {
+      margin-top:1.8rem;
+      width:100%;
+      padding:1rem;
+      background:transparent;
+      border:1px solid var(--gold);
+      color:var(--gold);
+      font-family:var(--font-body);
+      font-size:0.76rem;
+      letter-spacing:0.2em;
+      text-transform:uppercase;
+      cursor:none;
+      position:relative;
+      overflow:hidden;
+      transition:color 0.38s;
+    }
+    .form-submit::before {
+      content:'';
+      position:absolute; inset:0;
+      background:var(--gold);
+      transform:translateX(-101%);
+      transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      z-index:-1;
+    }
+    .form-submit:hover { color:var(--black); }
+    .form-submit:hover::before { transform:translateX(0); }
+
+    /* toast */
+    #form-toast {
+      position:fixed;
+      bottom:2rem;
+      left:50%;
+      transform:translateX(-50%) translateY(110px);
+      background:rgba(24,24,24,0.98);
+      border:1px solid rgba(201,169,110,0.35);
+      color:var(--gold);
+      padding:0.9rem 2.2rem;
+      font-size:0.8rem;
+      letter-spacing:0.1em;
+      z-index:9999;
+      transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);
+      white-space:nowrap;
+      backdrop-filter:blur(10px);
+    }
+    #form-toast.show { transform:translateX(-50%) translateY(0); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4.5rem 5vw 2.5rem;
+      position:relative; z-index:2;
+    }
+    .footer-inner {
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:3rem;
+      margin-bottom:3rem;
+    }
+    @media(max-width:760px){ .footer-inner { grid-template-columns:1fr; gap:2rem; } }
+
+    .footer-logo {
+      font-family:var(--font-head);
+      font-size:1.4rem;
+      letter-spacing:0.04em;
+      color:var(--white);
+      text-decoration:none;
+      display:inline-block;
+      margin-bottom:1rem;
+    }
+    .footer-logo .he { color:var(--gold); }
+    .footer-logo .she { color:var(--rose); }
+    .footer-tagline {
+      font-family:var(--font-head);
+      font-style:italic;
+      color:rgba(245,240,235,0.3);
+      font-size:0.88rem;
+      line-height:1.65;
+      max-width:250px;
+    }
+    .footer-col-title {
+      font-size:0.66rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:1.2rem;
+    }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+    .footer-links a {
+      font-size:0.84rem;
+      color:rgba(245,240,235,0.4);
+      text-decoration:none;
+      transition:color 0.25s;
+      cursor:none;
+    }
+    .footer-links a:hover { color:var(--gold); }
+    .footer-address {
+      font-size:0.82rem;
+      color:rgba(245,240,235,0.38);
+      line-height:1.85;
+    }
+    .footer-bottom {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding-top:1.8rem;
+      border-top:1px solid rgba(255,255,255,0.05);
+      font-size:0.7rem;
+      color:rgba(245,240,235,0.18);
+      letter-spacing:0.05em;
+    }
+    @media(max-width:580px){ .footer-bottom { flex-direction:column; gap:0.9rem; text-align:center; } }
+
+    .socials { display:flex; gap:0.9rem; margin-top:1.6rem; }
+    .socials a {
+      width:34px; height:34px;
+      border:1px solid rgba(255,255,255,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgba(245,240,235,0.38);
+      text-decoration:none;
+      transition:border-color 0.25s, color 0.25s;
+      cursor:none;
+    }
+    .socials a:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* ─── MOBILE UTILS ─── */
+    @media(max-width:600px){
+      .hero-scissors { opacity:0.08; }
+      .hero-comb { opacity:0.06; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- ════════════════════════ NAVBAR ════════════════════════ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo"><span class="he">He</span> &amp; <span class="she">She</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#booking">Book</a></li>
+  </ul>
+  <button class="nav-cta shimmer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ════════════════════════ HERO ════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-layer" id="hero-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Scissors SVG -->
+  <svg class="hero-scissors" id="sc-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="48" cy="42" r="22" stroke="#c9a96e" stroke-width="2.2"/>
+    <circle cx="152" cy="42" r="22" stroke="#b76e79" stroke-width="2.2"/>
+    <circle cx="48" cy="42" r="9" fill="#c9a96e" fill-opacity="0.25"/>
+    <circle cx="152" cy="42" r="9" fill="#b76e79" fill-opacity="0.25"/>
+    <line x1="64" y1="55" x2="172" y2="178" stroke="#c9a96e" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="136" y1="55" x2="28" y2="178" stroke="#b76e79" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="100" cy="116" r="5" fill="rgba(201,169,110,0.5)"/>
+  </svg>
+
+  <!-- Comb SVG -->
+  <svg class="hero-comb" id="cb-svg" viewBox="0 0 180 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="176" height="22" rx="6" stroke="#c9a96e" stroke-width="1.5"/>
+    <line x1="22" y1="24" x2="22" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="40" y1="24" x2="40" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="58" y1="24" x2="58" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="76" y1="24" x2="76" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="94" y1="24" x2="94" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="112" y1="24" x2="112" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="130" y1="24" x2="130" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="148" y1="24" x2="148" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="166" y1="24" x2="166" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="hero-content">
+    <h1 class="hero-title" id="hero-title">
+      <span class="hero-he">He</span>
+      <span class="hero-amp">&amp;</span>
+      <span class="hero-she">She</span>
+    </h1>
+    <p class="hero-tagline" id="hero-tagline">Where Style Meets Identity</p>
+    <a href="#booking" class="hero-cta shimmer">Book Your Experience</a>
+  </div>
+
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- ════════════════════════ SERVICES ════════════════════════ -->
+<section id="services">
+  <div class="services-header reveal">
+    <span class="section-label">What We Offer</span>
+    <h2 class="services-title">Crafted for <em>Every</em> You</h2>
+    <div class="gold-divider"></div>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card reveal" data-tilt>
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="24" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.35"/>
+        <path d="M15 36 Q19 18 25 16 Q31 18 35 36" stroke="#c9a96e" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <circle cx="25" cy="12" r="3" fill="#c9a96e" fill-opacity="0.55"/>
+        <line x1="20" y1="27" x2="30" y2="27" stroke="#c9a96e" stroke-width="1.2" stroke-opacity="0.4"/>
+        <line x1="18" y1="32" x2="32" y2="32" stroke="#c9a96e" stroke-width="1.2" stroke-opacity="0.4"/>
+      </svg>
+      <h3 class="service-name">Hair</h3>
+      <p class="service-desc">Expert cuts, coloring &amp; treatments tailored to your texture and lifestyle.</p>
+      <ul class="service-items">
+        <li>Haircut &amp; Style <span>from ₹499</span></li>
+        <li>Global Color <span>from ₹1,499</span></li>
+        <li>Keratin Treatment <span>from ₹2,999</span></li>
+        <li>Balayage / Highlights <span>from ₹2,499</span></li>
+      </ul>
+      <div class="card-bar"></div>
+    </div>
+
+    <div class="service-card reveal" data-tilt style="transition-delay:.12s">
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="24" stroke="#b76e79" stroke-width="1" stroke-opacity="0.35"/>
+        <ellipse cx="25" cy="21" rx="10" ry="12" stroke="#b76e79" stroke-width="1.8" fill="none"/>
+        <path d="M17 33 Q25 42 33 33" stroke="#b76e79" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <circle cx="21" cy="19" r="1.5" fill="#b76e79" fill-opacity="0.5"/>
+        <circle cx="29" cy="19" r="1.5" fill="#b76e79" fill-opacity="0.5"/>
+      </svg>
+      <h3 class="service-name">Skin</h3>
+      <p class="service-desc">Revitalizing facials, waxing &amp; advanced skincare rituals for a radiant glow.</p>
+      <ul class="service-items">
+        <li>Classic Facial <span>from ₹799</span></li>
+        <li>Gold Facial <span>from ₹1,599</span></li>
+        <li>Full Body Waxing <span>from ₹1,299</span></li>
+        <li>Threading &amp; Cleanup <span>from ₹199</span></li>
+      </ul>
+      <div class="card-bar"></div>
+    </div>
+
+    <div class="service-card reveal" data-tilt style="transition-delay:.24s">
+      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="24" stroke="#e2c99a" stroke-width="1" stroke-opacity="0.35"/>
+        <path d="M17 38 L17 24 Q17 17 21 17 L29 17 Q33 17 33 24 L33 38 Q33 40 31 40 L19 40 Q17 40 17 38Z" stroke="#e2c99a" stroke-width="1.8" fill="none"/>
+        <path d="M19 17 Q21 11 25 10 Q29 11 31 17" stroke="#e2c99a" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".55"/>
+      </svg>
+      <h3 class="service-name">Nails</h3>
+      <p class="service-desc">Manicures, pedicures &amp; nail art that turn your hands into a statement.</p>
+      <ul class="service-items">
+        <li>Basic Manicure <span>from ₹399</span></li>
+        <li>Gel Extensions <span>from ₹999</span></li>
+        <li>Nail Art (per nail) <span>from ₹49</span></li>
+        <li>Spa Pedicure <span>from ₹699</span></li>
+      </ul>
+      <div class="card-bar"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════ GALLERY ════════════════════════ -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <span class="section-label">Our Work</span>
+    <h2 class="gallery-title">Moments of <em>Transformation</em></h2>
+    <div class="gold-divider"></div>
+  </div>
+
+  <div class="masonry reveal">
+
+    <div class="masonry-item" data-parallax="0.07">
+      <div class="gallery-box" style="height:310px;background:linear-gradient(135deg,#16100a 0%,#261c0e 55%,#16100a 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%">
+          <svg width="44" height="44" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.45"/><path d="M15 36 Q19 18 25 16 Q31 18 35 36" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          Hair Transformation
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label">Colour &amp; Cut</div>
+    </div>
+
+    <div class="masonry-item" data-parallax="0.1" style="margin-top:38px">
+      <div class="gallery-box" style="height:230px;background:linear-gradient(135deg,#170d11 0%,#261318 55%,#170d11 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(183,110,121,0.3)">
+          <svg width="40" height="40" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#b76e79" stroke-width="1" stroke-opacity="0.45"/><ellipse cx="25" cy="21" rx="9" ry="11" stroke="#b76e79" stroke-width="1.5" fill="none"/></svg>
+          Skin Ritual
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label" style="color:var(--rose-light)">Facial Glow</div>
+    </div>
+
+    <div class="masonry-item" data-parallax="0.04">
+      <div class="gallery-box" style="height:195px;background:linear-gradient(135deg,#0c1008 0%,#141b0f 55%,#0c1008 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(226,201,154,0.28)">
+          <svg width="38" height="38" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#e2c99a" stroke-width="1" stroke-opacity="0.45"/><path d="M17 38 L17 24 Q17 17 21 17 L29 17 Q33 17 33 24 L33 38 Q33 40 31 40 L19 40 Q17 40 17 38Z" stroke="#e2c99a" stroke-width="1.5" fill="none"/></svg>
+          Nail Art
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label" style="color:var(--gold-light)">Gel Extensions</div>
+    </div>
+
+    <div class="masonry-item" data-parallax="0.08" style="margin-top:-18px">
+      <div class="gallery-box" style="height:275px;background:linear-gradient(135deg,#11100a 0%,#1d1c10 55%,#11100a 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%">
+          <svg width="44" height="22" viewBox="0 0 180 64" fill="none"><rect x="2" y="2" width="176" height="22" rx="5" stroke="#c9a96e" stroke-width="1.5"/><line x1="22" y1="24" x2="22" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="44" y1="24" x2="44" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="24" x2="66" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="88" y1="24" x2="88" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="110" y1="24" x2="110" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="132" y1="24" x2="132" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="154" y1="24" x2="154" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Styling Session
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label">Blow Dry &amp; Set</div>
+    </div>
+
+    <div class="masonry-item" data-parallax="0.12">
+      <div class="gallery-box" style="height:350px;background:linear-gradient(135deg,#0f0a13 0%,#180f1e 55%,#0f0a13 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(183,110,121,0.3)">
+          <div style="width:64px;height:64px;border-radius:50%;border:1px solid rgba(183,110,121,0.3);display:flex;align-items:center;justify-content:center">
+            <div style="width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(183,110,121,0.2),transparent)"></div>
+          </div>
+          Spa &amp; Wellness
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label" style="color:var(--rose-light)">Luxury Spa</div>
+    </div>
+
+    <div class="masonry-item" data-parallax="0.05" style="margin-top:24px">
+      <div class="gallery-box" style="height:215px;background:linear-gradient(135deg,#090f09 0%,#111911 55%,#090f09 100%)">
+        <div class="gallery-placeholder-inner" style="height:100%">
+          <svg width="46" height="46" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.35"/><circle cx="25" cy="25" r="13" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.2"/><circle cx="25" cy="25" r="5" fill="#c9a96e" fill-opacity="0.14"/></svg>
+          Bridal Look
+        </div>
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-label">Bridal Package</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════ ABOUT ════════════════════════ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="reveal">
+      <span class="section-label">Our Story</span>
+      <h2 class="about-heading">Where Every Client<br>Becomes a <em>Canvas</em></h2>
+      <p class="about-text">He &amp; She Unisex Salon was born from a simple belief: beauty has no gender. Founded in 2012, we've built a sanctuary where professionals craft experiences as unique as the individuals who walk through our doors.</p>
+      <p class="about-text">Our team of master stylists, estheticians, and nail artists bring together decades of expertise, constant education, and genuine passion. We don't just change appearances — we help you arrive at the version of yourself you've always imagined.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Years of Excellence</div>
+        </div>
+        <div>
+          <div class="stat-num" style="color:var(--rose)">8K+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div>
+          <div class="stat-num">24</div>
+          <div class="stat-label">Expert Artists</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="orb-scene reveal" style="transition-delay:.18s">
+      <div class="about-orb">
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-core"></div>
+        <div class="orb-dot"></div>
+        <div class="orb-dot"></div>
+        <div class="orb-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ BOOKING ════════════════════════ -->
+<section id="booking">
+  <div class="booking-inner">
+    <div class="reveal">
+      <span class="section-label">Reserve Your Visit</span>
+      <h2 class="booking-title">Book an <em>Appointment</em></h2>
+      <div class="gold-divider"></div>
+      <p class="booking-sub">Reserve your chair. We'll handle the rest.</p>
+    </div>
+
+    <form id="booking-form" class="reveal" style="transition-delay:.15s" onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fname">Full Name</label>
+          <input type="text" id="fname" placeholder="Riya Sharma" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210" required />
+        </div>
+        <div class="form-group">
+          <label for="service">Service</label>
+          <select id="service" required>
+            <option value="" disabled selected>Choose a service</option>
+            <optgroup label="— Hair">
+              <option>Haircut &amp; Style</option>
+              <option>Global Color</option>
+              <option>Keratin Treatment</option>
+              <option>Balayage / Highlights</option>
+            </optgroup>
+            <optgroup label="— Skin">
+              <option>Classic Facial</option>
+              <option>Gold Facial</option>
+              <option>Full Body Waxing</option>
+              <option>Threading &amp; Cleanup</option>
+            </optgroup>
+            <optgroup label="— Nails">
+              <option>Basic Manicure</option>
+              <option>Gel Extensions</option>
+              <option>Nail Art</option>
+              <option>Spa Pedicure</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="appt-date">Preferred Date</label>
+          <input type="date" id="appt-date" required />
+        </div>
+        <div class="form-group full">
+          <label for="notes">Special Requests <span style="opacity:.5">(optional)</span></label>
+          <textarea id="notes" placeholder="Any preferences, allergies, or notes…"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="form-submit shimmer">Confirm My Appointment</button>
+    </form>
+  </div>
+</section>
+
+<div id="form-toast">✦ Request received — we'll confirm your appointment shortly!</div>
+
+<!-- ════════════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#hero" class="footer-logo"><span class="he">He</span> &amp; <span class="she">She</span></a>
+      <p class="footer-tagline">"A sanctuary where every expression of you is celebrated."</p>
+      <div class="socials">
+        <a href="#" aria-label="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" aria-label="WhatsApp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#booking">Book Appointment</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Visit Us</div>
+      <div class="footer-address">
+        12, Lotus Tower, MG Road<br>
+        Bengaluru, KA 560001<br><br>
+        <a href="tel:+918012345678" style="color:var(--gold);text-decoration:none">+91 80 1234 5678</a><br><br>
+        Mon – Sat &nbsp;9am – 9pm<br>
+        Sunday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10am – 7pm
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 He &amp; She Unisex Salon. All rights reserved.</span>
+    <span style="font-family:var(--font-head);font-style:italic;color:rgba(201,169,110,0.28)">Where Style Meets Identity</span>
+  </div>
+</footer>
+
+<!-- ════════════════════════ JAVASCRIPT ════════════════════════ -->
+<script>
+(function() {
+
+  /* ── CUSTOM CURSOR ── */
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
+
+  function tickCursor() {
+    rx += (mx - rx) * 0.11;
+    ry += (my - ry) * 0.11;
+    ring.style.left = rx+'px';
+    ring.style.top  = ry+'px';
+    requestAnimationFrame(tickCursor);
+  }
+  tickCursor();
+
+  document.querySelectorAll('a, button, .service-card, .masonry-item, select, input, textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width  = '54px';
+      ring.style.height = '54px';
+      ring.style.borderColor = 'rgba(201,169,110,0.85)';
+      dot.style.transform = 'translate(-50%,-50%) scale(1.9)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width  = '36px';
+      ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(201,169,110,0.55)';
+      dot.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  /* ── PARTICLE CANVAS ── */
+  const canvas = document.getElementById('particle-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas, {passive:true});
+
+  const PARTICLE_COUNT = 130;
+  const particles = [];
+
+  function makeParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.3,
+      vx: (Math.random() - 0.5) * 0.16,
+      vy: -(Math.random() * 0.15 + 0.04),
+      alpha: Math.random() * 0.5 + 0.1,
+      color: Math.random() > 0.5 ? '201,169,110' : '183,110,121',
+      life: 0,
+      maxLife: Math.random() * 320 + 200,
+    };
+  }
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const p = makeParticle();
+    p.life = Math.floor(Math.random() * p.maxLife);
+    particles.push(p);
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy; p.life++;
+      if (p.life > p.maxLife || p.y < -10 || p.x < -10 || p.x > canvas.width + 10) {
+        Object.assign(p, makeParticle()); p.y = canvas.height + 5; p.life = 0;
+      }
+      const progress = p.life / p.maxLife;
+      const fade = 1 - Math.abs(progress - 0.5) * 2;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha * fade})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  /* ── SCROLL PARALLAX ── */
+  const heroBg      = document.getElementById('hero-bg');
+  const heroTitle   = document.getElementById('hero-title');
+  const heroTagline = document.getElementById('hero-tagline');
+  const scSvg       = document.getElementById('sc-svg');
+  const cbSvg       = document.getElementById('cb-svg');
+  const navbar      = document.getElementById('navbar');
+  const galleryItems = document.querySelectorAll('.masonry-item[data-parallax]');
+
+  let scrollTick = false;
+  function onScroll() {
+    if (!scrollTick) { requestAnimationFrame(applyScroll); scrollTick = true; }
+  }
+  function applyScroll() {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 50);
+    heroBg.style.transform      = `translateY(${y * 0.08}px)`;
+    heroTitle.style.transform   = `translateY(${y * 0.22}px)`;
+    heroTagline.style.transform = `translateY(${y * 0.28}px)`;
+    if (scSvg) scSvg.style.transform = `translateY(${y * 0.38}px) rotateZ(${y * 0.018}deg)`;
+    if (cbSvg) cbSvg.style.transform = `translateY(${y * 0.32}px) rotateZ(${-y * 0.012}deg)`;
+
+    galleryItems.forEach(item => {
+      const speed = parseFloat(item.dataset.parallax);
+      const rect  = item.getBoundingClientRect();
+      const mid   = window.innerHeight / 2 - rect.top - rect.height / 2;
+      item.style.transform = `translateY(${mid * speed}px)`;
+    });
+    scrollTick = false;
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ── INTERSECTION OBSERVER ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── SERVICE CARD TILT ── */
+  document.querySelectorAll('.service-card[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+      const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+      card.style.transform = `perspective(800px) rotateX(${-dy * 9}deg) rotateY(${dx * 9}deg) translateZ(28px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+
+  /* ── BURGER MENU ── */
+  document.getElementById('burger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+  document.querySelectorAll('#nav-links a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'))
+  );
+
+  /* ── FORM ── */
+  window.handleSubmit = function(e) {
+    e.preventDefault();
+    const toast = document.getElementById('form-toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4200);
+    e.target.reset();
+  };
+
+  /* ── MIN DATE ── */
+  const d = document.getElementById('appt-date');
+  if (d) d.min = new Date().toISOString().split('T')[0];
+
+})();
+</script>
+</body>
+</html>
