@@ -3,837 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>He &amp; She Unisex Salon</title>
+  <title>He &amp; She Unisex Salon – Best Salon in KGF | Kolar Gold Fields</title>
+  <meta name="description" content="He & She Unisex Salon in Bharat Nagar, KGF – Premium hair, skin & grooming services. Best unisex salon in Kolar Gold Fields. Book on WhatsApp now!" />
+  <meta name="keywords" content="salon in KGF, best unisex salon in Kolar, best salon in Kolar Gold Fields, he and she salon KGF, hair salon KGF, beauty parlour KGF, grooming KGF" />
+  <meta property="og:title" content="He & She Unisex Salon – Best Salon in KGF" />
+  <meta property="og:description" content="Premium hair, skin & grooming services in Bharat Nagar, Kolar Gold Fields. Book your appointment on WhatsApp." />
+  <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
   <style>
-    /* ─── RESET & BASE ─── */
+    /* ── RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --gold:       #c9a96e;
-      --gold-light: #e2c99a;
-      --rose:       #b76e79;
-      --rose-light: #d4949f;
-      --black:      #0a0a0a;
-      --black2:     #111111;
-      --black3:     #181818;
-      --black4:     #222222;
-      --white:      #f5f0eb;
-      --muted:      #888;
-      --font-head:  'Playfair Display', Georgia, serif;
-      --font-body:  'DM Sans', sans-serif;
+      --gold:      #c9a96e;
+      --gold-l:    #e8d09a;
+      --gold-d:    #9e7d46;
+      --rose:      #b76e79;
+      --black:     #0a0a0a;
+      --black2:    #111;
+      --black3:    #1a1a1a;
+      --black4:    #242424;
+      --white:     #f5f0eb;
+      --muted:     rgba(245,240,235,0.48);
+      --fh: 'Playfair Display', Georgia, serif;
+      --fb: 'DM Sans', sans-serif;
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    @media (hover: none) { body { cursor: auto; } #cursor-dot, #cursor-ring { display: none; } }
-
+    body { background: var(--black); color: var(--white); font-family: var(--fb); overflow-x: hidden; cursor: none; }
+    @media(hover:none){ body { cursor: auto; } #cursor-dot,#cursor-ring { display: none; } }
     ::selection { background: var(--gold); color: var(--black); }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; cursor: none; }
 
-    /* ─── CURSOR ─── */
+    /* ── CURSOR ── */
     #cursor-dot {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.08s, background 0.2s;
-      will-change: left, top;
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform .08s, background .2s;
+      will-change: left,top;
     }
     #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1.5px solid rgba(201,169,110,0.55);
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid rgba(201,169,110,.55); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width .18s, height .18s, border-color .18s;
+      will-change: left,top;
+    }
+
+    /* ── PARTICLES ── */
+    #pc { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .45; }
+
+    /* ── FLOATING WA BUTTON ── */
+    #wa-float {
+      position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 8000;
+      width: 58px; height: 58px;
+      background: #25D366;
       border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s, height 0.2s, border-color 0.2s;
-      will-change: left, top;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 30px rgba(37,211,102,.45);
+      cursor: none;
+      transition: transform .25s, box-shadow .25s;
+      animation: wa-pulse 2.8s ease-in-out infinite;
     }
-
-    /* ─── PARTICLE CANVAS ─── */
-    #particle-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
+    #wa-float:hover { transform: scale(1.12); box-shadow: 0 10px 40px rgba(37,211,102,.6); }
+    @keyframes wa-pulse {
+      0%,100%{ box-shadow: 0 6px 30px rgba(37,211,102,.45); }
+      50%    { box-shadow: 0 6px 30px rgba(37,211,102,.45), 0 0 0 10px rgba(37,211,102,.12); }
     }
+    #wa-float svg { width: 30px; height: 30px; }
 
-    /* ─── NAVBAR ─── */
+    /* ── NAVBAR ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 5vw;
-      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s, padding 0.4s;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 5vw;
+      transition: background .4s, backdrop-filter .4s, padding .4s;
     }
     nav.scrolled {
-      background: rgba(10,10,10,0.85);
+      background: rgba(10,10,10,.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(201,169,110,0.12);
-      padding-top: 0.9rem; padding-bottom: 0.9rem;
+      box-shadow: 0 1px 0 rgba(201,169,110,.12);
+      padding-top: .8rem; padding-bottom: .8rem;
     }
-    .nav-logo {
-      font-family: var(--font-head);
-      font-size: 1.35rem;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .nav-logo .he  { color: var(--gold); }
+    .nav-logo { font-family: var(--fh); font-size: 1.25rem; letter-spacing: .04em; color: var(--white); }
+    .nav-logo .he { color: var(--gold); }
     .nav-logo .she { color: var(--rose); }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: rgba(245,240,235,0.55);
-      text-decoration: none;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      transition: color 0.25s;
-      cursor: none;
-    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; transition: color .25s; cursor: none; }
     .nav-links a:hover { color: var(--gold); }
     .nav-cta {
-      background: transparent;
-      border: 1px solid rgba(201,169,110,0.6);
-      color: var(--gold);
-      padding: 0.5rem 1.3rem;
-      font-family: var(--font-body);
-      font-size: 0.74rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: none;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
-      position: relative;
-      overflow: hidden;
+      background: transparent; border: 1px solid rgba(201,169,110,.6);
+      color: var(--gold); padding: .5rem 1.2rem;
+      font-family: var(--fb); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+      cursor: none; position: relative; overflow: hidden; transition: color .3s;
     }
-    .nav-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold);
-      transform: translateX(-101%);
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      z-index: -1;
-    }
-    .nav-cta:hover { color: var(--black); border-color: var(--gold); }
-    .nav-cta:hover::before { transform: translateX(0); }
-
-    /* burger */
-    .nav-burger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: none;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .nav-burger span { display: block; width: 24px; height: 1.5px; background: var(--gold); transition: all 0.3s; }
-
-    @media(max-width: 820px){
-      .nav-links, .nav-cta { display: none; }
+    .nav-cta::before { content:''; position:absolute; inset:0; background:var(--gold); transform:translateX(-101%); transition:transform .35s cubic-bezier(.4,0,.2,1); z-index:-1; }
+    .nav-cta:hover { color: var(--black); }
+    .nav-cta:hover::before { transform:translateX(0); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 4px; }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--gold); transition: all .3s; }
+    @media(max-width:820px){
+      .nav-links,.nav-cta { display: none; }
       .nav-burger { display: flex; }
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 64px; left: 0; right: 0;
-        background: rgba(10,10,10,0.98);
-        backdrop-filter: blur(20px);
-        padding: 2rem 5vw 2.5rem;
-        gap: 1.5rem;
-        border-top: 1px solid rgba(201,169,110,0.1);
-      }
-      .nav-links.open a { font-size: 1rem; }
+      .nav-links.open { display:flex; flex-direction:column; position:fixed; top:60px; left:0; right:0; background:rgba(10,10,10,.98); backdrop-filter:blur(20px); padding:2rem 5vw 2.5rem; gap:1.4rem; border-top:1px solid rgba(201,169,110,.1); }
+      .nav-links.open a { font-size:.95rem; }
     }
 
-    /* ─── SECTION REVEAL ─── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
-    }
+    /* ── SHARED ── */
+    section { position: relative; z-index: 2; }
+    .reveal { opacity: 0; transform: translateY(50px); transition: opacity .85s cubic-bezier(.22,1,.36,1), transform .85s cubic-bezier(.22,1,.36,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    .section-label { display:inline-block; font-size:.67rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; border-bottom:1px solid rgba(201,169,110,.28); padding-bottom:.32rem; }
+    .gold-div { width:55px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:1.3rem auto; }
+    .section-title { font-family:var(--fh); font-size:clamp(2rem,4.5vw,3.4rem); font-weight:700; line-height:1.15; }
+    .section-title em { font-style:italic; color:var(--gold); }
 
-    .section-label {
-      display: inline-block;
-      font-size: 0.68rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      border-bottom: 1px solid rgba(201,169,110,0.28);
-      padding-bottom: 0.35rem;
-    }
-
-    .gold-divider {
-      width: 56px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 1.4rem auto;
-    }
-
-    /* ─── HERO ─── */
+    /* ── HERO ── */
     #hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      padding: 0 5vw;
-      position: relative;
-      perspective: 1000px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden; padding: 0 5vw; position: relative;
     }
-
-    .hero-bg-layer {
-      position: absolute;
-      inset: -25%;
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 55% 60% at 28% 42%, rgba(201,169,110,0.075) 0%, transparent 70%),
-        radial-gradient(ellipse 48% 52% at 74% 65%, rgba(183,110,121,0.07) 0%, transparent 70%);
+        linear-gradient(to bottom, rgba(10,10,10,.72) 0%, rgba(10,10,10,.55) 50%, rgba(10,10,10,.82) 100%),
+        url('https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?w=1600&q=80') center/cover no-repeat;
       will-change: transform;
-      z-index: 0;
+    }
+    .hero-bg-overlay {
+      position:absolute; inset:0; z-index:1;
+      background:
+        radial-gradient(ellipse 55% 60% at 25% 40%, rgba(201,169,110,.09) 0%,transparent 70%),
+        radial-gradient(ellipse 45% 50% at 75% 65%, rgba(183,110,121,.07) 0%,transparent 70%);
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    /* floating shapes */
+    .orb { position:absolute; border-radius:50%; pointer-events:none; animation:orb-d 16s ease-in-out infinite; will-change:transform; z-index:1; }
+    .o1 { width:380px; height:380px; background:radial-gradient(circle,rgba(201,169,110,.05),transparent 70%); border:1px solid rgba(201,169,110,.07); top:5%; left:-10%; }
+    .o2 { width:260px; height:260px; background:radial-gradient(circle,rgba(183,110,121,.05),transparent 70%); border:1px solid rgba(183,110,121,.07); bottom:12%; right:2%; animation-delay:-7s; }
+    .o3 { width:140px; height:140px; background:radial-gradient(circle,rgba(201,169,110,.07),transparent 70%); border:1px solid rgba(201,169,110,.1); top:50%; left:47%; animation-delay:-11s; animation-duration:10s; }
+    @keyframes orb-d { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(24px,-30px) scale(1.06);} 66%{transform:translate(-18px,20px) scale(.95);} }
+
+    /* scissors + comb */
+    .hero-sc { position:absolute; width:clamp(130px,18vw,270px); opacity:.18; right:7vw; top:22%; animation:sc-f 9s ease-in-out infinite; pointer-events:none; z-index:1; will-change:transform; }
+    @keyframes sc-f { 0%,100%{transform:rotate(0deg) translateY(0);} 30%{transform:rotate(10deg) translateY(-20px);} 70%{transform:rotate(-6deg) translateY(10px);} }
+    .hero-cb { position:absolute; width:clamp(90px,13vw,190px); opacity:.1; left:5vw; bottom:28%; animation:cb-f 12s ease-in-out infinite; pointer-events:none; z-index:1; will-change:transform; }
+    @keyframes cb-f { 0%,100%{transform:rotate(-18deg) translateY(0);} 40%{transform:rotate(-10deg) translateY(-24px) translateX(10px);} 75%{transform:rotate(-24deg) translateY(12px) translateX(-6px);} }
+
+    .hero-content { position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; }
+    .hero-badge { display:inline-block; border:1px solid rgba(201,169,110,.35); color:var(--gold); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; padding:.4rem 1rem; margin-bottom:1.5rem; }
 
     .hero-title {
-      font-family: var(--font-head);
-      font-size: clamp(4.5rem, 14vw, 13rem);
-      font-weight: 900;
-      line-height: 0.88;
-      letter-spacing: -0.025em;
+      font-family: var(--fh);
+      font-size: clamp(2.5rem, 8vw, 7rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -.02em;
       will-change: transform;
     }
-    .hero-he   { color: var(--gold); display: block; }
-    .hero-amp  { color: rgba(245,240,235,0.14); font-size: 0.36em; display: block; line-height: 1.7; }
-    .hero-she  { color: var(--rose); display: block; }
+    .hero-title .he { color: var(--gold); }
+    .hero-title .she { color: var(--rose); }
 
-    .hero-tagline {
-      margin-top: 1.8rem;
-      font-size: clamp(0.78rem, 2.2vw, 1rem);
-      letter-spacing: 0.28em;
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: clamp(.9rem, 2.4vw, 1.15rem);
+      color: rgba(245,240,235,.6);
+      letter-spacing: .06em;
+      will-change: transform;
+    }
+    .hero-location {
+      margin-top: .6rem;
+      font-size: .78rem;
+      color: rgba(245,240,235,.38);
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(245,240,235,0.42);
-      will-change: transform;
+      display: flex; align-items: center; gap: .5rem; justify-content: center;
     }
+    .hero-location svg { flex-shrink:0; opacity:.6; }
 
-    .hero-cta {
-      margin-top: 2.8rem;
-      display: inline-block;
-      position: relative;
-      padding: 1rem 3.2rem;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: none;
-      overflow: hidden;
-      transition: color 0.38s;
-    }
-    .hero-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold);
-      transform: translateX(-101%);
-      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
-      z-index: -1;
-    }
-    .hero-cta:hover { color: var(--black); }
-    .hero-cta:hover::before { transform: translateX(0); }
+    .hero-btns { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
 
-    /* shimmer on cta */
-    .shimmer { position: relative; overflow: hidden; }
-    .shimmer::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -110%;
-      width: 65%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.09), transparent);
-      animation: shimmer-anim 3.5s infinite;
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: .65rem;
+      background: #25D366; color: #fff;
+      padding: .9rem 2rem; font-family: var(--fb); font-size: .82rem;
+      letter-spacing: .12em; text-transform: uppercase; cursor: none;
+      border: none; transition: background .3s, transform .25s, box-shadow .3s;
+      box-shadow: 0 6px 28px rgba(37,211,102,.35);
     }
-    @keyframes shimmer-anim { 0%{ left:-110% } 100%{ left:210% } }
+    .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 10px 36px rgba(37,211,102,.5); }
 
-    /* floating SVGs */
-    .hero-scissors {
-      position: absolute;
-      width: clamp(140px, 18vw, 280px);
-      opacity: 0.16;
-      right: 7vw; top: 22%;
-      animation: sc-float 9s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 1;
-      will-change: transform;
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: transparent; border: 1px solid var(--gold); color: var(--gold);
+      padding: .9rem 2rem; font-family: var(--fb); font-size: .82rem;
+      letter-spacing: .12em; text-transform: uppercase; cursor: none;
+      position: relative; overflow: hidden; transition: color .35s;
     }
-    @keyframes sc-float {
-      0%,100%{ transform: rotate(0deg) translateY(0); }
-      30%    { transform: rotate(10deg) translateY(-20px); }
-      70%    { transform: rotate(-6deg) translateY(10px); }
-    }
-    .hero-comb {
-      position: absolute;
-      width: clamp(100px, 14vw, 200px);
-      opacity: 0.11;
-      left: 5vw; bottom: 26%;
-      animation: cb-float 12s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 1;
-      will-change: transform;
-    }
-    @keyframes cb-float {
-      0%,100%{ transform: rotate(-18deg) translateY(0) translateX(0); }
-      40%    { transform: rotate(-10deg) translateY(-26px) translateX(10px); }
-      75%    { transform: rotate(-24deg) translateY(14px) translateX(-6px); }
-    }
+    .btn-outline::before { content:''; position:absolute; inset:0; background:var(--gold); transform:translateX(-101%); transition:transform .38s cubic-bezier(.4,0,.2,1); z-index:-1; }
+    .btn-outline:hover { color: var(--black); }
+    .btn-outline:hover::before { transform:translateX(0); }
 
-    /* orbs */
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: orb-drift 16s ease-in-out infinite;
-      will-change: transform;
-      z-index: 1;
-    }
-    .orb-1 { width: 400px; height: 400px; background: radial-gradient(circle,rgba(201,169,110,0.04),transparent 70%); border: 1px solid rgba(201,169,110,0.07); top: 6%; left: -10%; animation-delay: 0s; }
-    .orb-2 { width: 280px; height: 280px; background: radial-gradient(circle,rgba(183,110,121,0.04),transparent 70%); border: 1px solid rgba(183,110,121,0.07); bottom: 12%; right: 2%; animation-delay: -6s; }
-    .orb-3 { width: 150px; height: 150px; background: radial-gradient(circle,rgba(201,169,110,0.06),transparent 70%); border: 1px solid rgba(201,169,110,0.1); top: 48%; left: 46%; animation-delay: -10s; animation-duration: 10s; }
-    @keyframes orb-drift {
-      0%,100%{ transform:translate(0,0) scale(1); }
-      33%    { transform:translate(26px,-32px) scale(1.06); }
-      66%    { transform:translate(-18px,20px) scale(0.95); }
-    }
+    .shimmer { position:relative; overflow:hidden; }
+    .shimmer::after { content:''; position:absolute; top:0; left:-110%; width:65%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); animation:shim 3.5s infinite; }
+    @keyframes shim { 0%{left:-110%} 100%{left:210%} }
 
-    /* scroll line */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
-      color: rgba(245,240,235,0.25);
-      font-size: 0.64rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      z-index: 4;
-    }
-    .scroll-indicator::after {
-      content: '';
-      display: block;
-      width: 1px; height: 44px;
-      background: linear-gradient(to bottom, rgba(201,169,110,0.55), transparent);
-      animation: sc-pulse 2.2s ease-in-out infinite;
-    }
-    @keyframes sc-pulse {
-      0%,100%{ opacity:0.4; transform:scaleY(1); }
-      50%    { opacity:1;   transform:scaleY(1.25); }
-    }
+    .scroll-ind { position:absolute; bottom:2.2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.5rem; color:rgba(245,240,235,.22); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; z-index:4; }
+    .scroll-ind::after { content:''; display:block; width:1px; height:42px; background:linear-gradient(to bottom,rgba(201,169,110,.55),transparent); animation:si-p 2.2s ease-in-out infinite; }
+    @keyframes si-p { 0%,100%{opacity:.4;transform:scaleY(1);} 50%{opacity:1;transform:scaleY(1.25);} }
 
-    /* ─── SERVICES ─── */
-    #services {
-      padding: 9rem 5vw;
-      background: var(--black2);
-      position: relative;
-      z-index: 2;
-    }
-    .services-header { text-align:center; margin-bottom: 4.5rem; }
-    .services-title {
-      font-family: var(--font-head);
-      font-size: clamp(2rem, 4.5vw, 3.6rem);
-      font-weight: 700;
-      line-height: 1.15;
-    }
-    .services-title em { font-style:italic; color:var(--gold); }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.8rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .service-card {
-      background: var(--black3);
-      border: 1px solid rgba(201,169,110,0.08);
-      padding: 2.8rem 2.2rem 2.4rem;
-      position: relative;
-      cursor: none;
-      transform-style: preserve-3d;
-      transition: box-shadow 0.4s, border-color 0.4s;
-      perspective: 800px;
-    }
-    .service-card::before {
-      content:'';
-      position:absolute; inset:0;
-      background: linear-gradient(135deg,rgba(201,169,110,0.025) 0%,transparent 55%);
-      opacity:0; transition:opacity 0.4s;
-    }
-    .service-card:hover { box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,169,110,0.18); border-color:rgba(201,169,110,0.22); }
-    .service-card:hover::before { opacity:1; }
-
-    .service-icon { width:50px; height:50px; margin-bottom:1.8rem; }
-    .service-name {
-      font-family:var(--font-head);
-      font-size:1.55rem;
-      font-weight:700;
-      margin-bottom:0.9rem;
-    }
-    .service-card:nth-child(1) .service-name { color:var(--gold); }
-    .service-card:nth-child(2) .service-name { color:var(--rose); }
-    .service-card:nth-child(3) .service-name { color:var(--gold-light); }
-
-    .service-desc {
-      font-size:0.86rem;
-      line-height:1.78;
-      color:rgba(245,240,235,0.46);
-      margin-bottom:1.8rem;
-    }
-    .service-items { list-style:none; display:flex; flex-direction:column; gap:0.65rem; }
-    .service-items li {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-size:0.82rem;
-      color:rgba(245,240,235,0.6);
-      border-bottom:1px solid rgba(255,255,255,0.04);
-      padding-bottom:0.65rem;
-    }
-    .service-items li:last-child { border-bottom:none; padding-bottom:0; }
-    .service-items li span { color:var(--gold); font-size:0.76rem; }
-
-    .card-bar {
-      position:absolute; bottom:0; left:0; right:0; height:2px;
-      transform:scaleX(0); transform-origin:left;
-      transition:transform 0.42s ease;
-    }
-    .service-card:nth-child(1) .card-bar { background:var(--gold); }
-    .service-card:nth-child(2) .card-bar { background:var(--rose); }
-    .service-card:nth-child(3) .card-bar { background:var(--gold-light); }
-    .service-card:hover .card-bar { transform:scaleX(1); }
-
-    /* ─── GALLERY ─── */
-    #gallery {
-      padding: 9rem 5vw;
-      background: var(--black);
-      position:relative; z-index:2;
-    }
-    .gallery-header { text-align:center; margin-bottom:4rem; }
-    .gallery-title {
-      font-family:var(--font-head);
-      font-size:clamp(2rem,4.5vw,3.6rem);
-      font-weight:700;
-    }
-    .gallery-title em { font-style:italic; color:var(--rose); }
-
-    .masonry {
-      columns: 3;
-      column-gap: 1.1rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    @media(max-width:860px){ .masonry { columns:2; } }
-    @media(max-width:520px){ .masonry { columns:1; } }
-
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 1.1rem;
-      position: relative;
-      overflow: hidden;
-      cursor: none;
-      transition: box-shadow 0.4s;
-      will-change: transform;
-    }
-    .masonry-item:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-
-    .gallery-box {
-      width:100%;
-      display:block;
-      position:relative;
-      overflow:hidden;
-      transition: transform 0.5s cubic-bezier(0.25,0.8,0.25,1);
-    }
-    .masonry-item:hover .gallery-box { transform:scale(1.04); }
-
-    .gallery-overlay {
-      position:absolute; inset:0;
-      background: linear-gradient(to top,rgba(10,10,10,0.7) 0%,transparent 50%);
-      opacity:0; transition:opacity 0.38s;
-    }
-    .masonry-item:hover .gallery-overlay { opacity:1; }
-
-    .gallery-label {
-      position:absolute;
-      bottom:0; left:0; right:0;
-      padding:1rem;
-      font-family:var(--font-head);
-      font-size:0.92rem;
-      font-style:italic;
-      color:var(--gold-light);
-      transform:translateY(8px);
-      opacity:0;
-      transition:opacity 0.35s, transform 0.35s;
-      z-index:2;
-    }
-    .masonry-item:hover .gallery-label { opacity:1; transform:translateY(0); }
-
-    .gallery-placeholder-inner {
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:1rem;
-      font-family:var(--font-head);
-      font-style:italic;
-      font-size:0.88rem;
-      color:rgba(201,169,110,0.22);
-      letter-spacing:0.06em;
-    }
-
-    /* ─── ABOUT ─── */
-    #about {
-      padding: 9rem 5vw;
-      background: var(--black2);
-      position:relative; z-index:2;
-    }
-    .about-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-    @media(max-width:800px){ .about-inner { grid-template-columns:1fr; gap:3.5rem; } }
-
-    .about-heading {
-      font-family:var(--font-head);
-      font-size:clamp(1.9rem,4vw,3rem);
-      font-weight:700;
-      line-height:1.2;
-      margin-bottom:1.5rem;
-    }
+    /* ── ABOUT ── */
+    #about { padding: 8rem 5vw; background: var(--black2); }
+    .about-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    @media(max-width:800px){ .about-inner { grid-template-columns:1fr; gap:3rem; } }
+    .about-heading { font-family:var(--fh); font-size:clamp(1.9rem,4vw,3rem); font-weight:700; line-height:1.2; margin-bottom:1.4rem; }
     .about-heading em { font-style:italic; color:var(--gold); }
-    .about-text {
-      font-size:0.9rem;
-      line-height:1.9;
-      color:rgba(245,240,235,0.52);
-      margin-bottom:1.3rem;
+    .about-text { font-size:.9rem; line-height:1.9; color:var(--muted); margin-bottom:1.1rem; }
+    .about-stats { display:flex; gap:2rem; margin-top:2.2rem; flex-wrap:wrap; }
+    .stat { text-align:center; }
+    .stat-num { font-family:var(--fh); font-size:2.4rem; font-weight:900; color:var(--gold); line-height:1; }
+    .stat-label { font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:rgba(245,240,235,.32); margin-top:.3rem; }
+    .about-img-box {
+      border:1px solid rgba(201,169,110,.12);
+      background:var(--black3);
+      aspect-ratio:4/5;
+      position:relative; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
     }
-    .about-stats { display:flex; gap:2.5rem; margin-top:2.5rem; flex-wrap:wrap; }
-    .stat-num {
-      font-family:var(--font-head);
-      font-size:2.6rem;
-      font-weight:900;
-      color:var(--gold);
-      line-height:1;
-    }
-    .stat-label {
-      font-size:0.68rem;
-      letter-spacing:0.13em;
-      text-transform:uppercase;
-      color:rgba(245,240,235,0.35);
-      margin-top:0.3rem;
-    }
+    .about-img-box::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=75') center/cover no-repeat; opacity:.55; transition:opacity .5s; }
+    .about-img-box:hover::before { opacity:.65; }
+    .about-img-box::after { content:'He & She'; position:absolute; bottom:1.5rem; left:1.5rem; font-family:var(--fh); font-style:italic; font-size:1.4rem; color:rgba(201,169,110,.6); }
 
-    /* animated 3D orb */
-    .orb-scene {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
+    /* ── SERVICES ── */
+    #services { padding: 8rem 5vw; background: var(--black); }
+    .services-header { text-align:center; margin-bottom:4rem; }
+    .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.6rem; max-width:1200px; margin:0 auto; }
+    .svc-card {
+      background:var(--black3); border:1px solid rgba(201,169,110,.08);
+      padding:2.4rem 2rem 2rem; position:relative; cursor:none;
+      transition:box-shadow .4s, border-color .4s, transform .4s;
     }
-    .about-orb {
-      width:clamp(240px,28vw,340px);
-      height:clamp(240px,28vw,340px);
-      border-radius:50%;
-      position:relative;
-      animation: orb-spin 22s linear infinite;
-    }
-    @keyframes orb-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .svc-card:hover { box-shadow:0 28px 70px rgba(0,0,0,.55),0 0 0 1px rgba(201,169,110,.2); border-color:rgba(201,169,110,.22); transform:translateY(-4px); }
+    .svc-icon { width:48px; height:48px; margin-bottom:1.5rem; }
+    .svc-name { font-family:var(--fh); font-size:1.35rem; font-weight:700; margin-bottom:.8rem; color:var(--gold); }
+    .svc-desc { font-size:.84rem; line-height:1.75; color:var(--muted); margin-bottom:1.4rem; }
+    .svc-price { display:inline-block; border:1px solid rgba(201,169,110,.28); color:var(--gold); font-size:.74rem; letter-spacing:.1em; padding:.3rem .8rem; }
+    .svc-bar { position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .42s ease; }
+    .svc-card:hover .svc-bar { transform:scaleX(1); }
 
-    .orb-ring {
-      position:absolute;
-      border-radius:50%;
-      border:1px solid rgba(201,169,110,0.2);
-      animation: orb-pulse 6s ease-in-out infinite;
+    /* ── GALLERY ── */
+    #gallery { padding: 8rem 5vw; background: var(--black2); }
+    .gallery-header { text-align:center; margin-bottom:3.5rem; }
+    .masonry { columns:3; column-gap:1rem; max-width:1100px; margin:0 auto; }
+    @media(max-width:860px){ .masonry{columns:2;} }
+    @media(max-width:520px){ .masonry{columns:1;} }
+    .m-item { break-inside:avoid; margin-bottom:1rem; position:relative; overflow:hidden; cursor:none; }
+    .m-box { width:100%; display:block; overflow:hidden; position:relative; }
+    .m-box img, .m-box .m-ph { width:100%; display:block; transition:transform .5s cubic-bezier(.25,.8,.25,1); }
+    .m-item:hover .m-ph, .m-item:hover img { transform:scale(1.06); }
+    .m-ph {
+      background:var(--black3);
+      display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.8rem;
+      font-family:var(--fh); font-style:italic; font-size:.85rem;
+      color:rgba(201,169,110,.22); letter-spacing:.05em;
     }
-    .orb-ring:nth-child(1){ inset:0; animation-delay:0s; }
-    .orb-ring:nth-child(2){ inset:-26px; border-color:rgba(183,110,121,0.13); animation-delay:-2s; animation-direction:reverse; }
-    .orb-ring:nth-child(3){ inset:-52px; border-color:rgba(201,169,110,0.07); animation-delay:-4s; }
-    @keyframes orb-pulse {
-      0%,100%{ transform:scale(1); opacity:0.8; }
-      50%    { transform:scale(1.04); opacity:0.35; }
-    }
-    .orb-core {
-      position:absolute;
-      inset:18%;
-      border-radius:50%;
-      background: radial-gradient(circle at 38% 36%, rgba(201,169,110,0.28) 0%, rgba(183,110,121,0.12) 45%, transparent 70%);
-      box-shadow: 0 0 90px rgba(201,169,110,0.1), inset 0 0 60px rgba(183,110,121,0.08);
-    }
-    .orb-dot {
-      position:absolute;
-      width:5px; height:5px;
-      border-radius:50%;
-      top:50%; left:50%;
-      margin:-2.5px 0 0 -2.5px;
-      animation: dot-orbit 9s linear infinite;
-    }
-    .orb-dot:nth-child(4){ background:var(--gold); animation-delay:0s; }
-    .orb-dot:nth-child(5){ background:var(--rose); animation-delay:-3s; }
-    .orb-dot:nth-child(6){ background:var(--gold-light); animation-delay:-6s; }
-    @keyframes dot-orbit {
-      0%  { transform: rotate(0deg)   translateX(var(--orb-r,135px)) scale(1);   opacity:0.9; }
-      50% { transform: rotate(180deg) translateX(var(--orb-r,135px)) scale(0.4); opacity:0.25; }
-      100%{ transform: rotate(360deg) translateX(var(--orb-r,135px)) scale(1);   opacity:0.9; }
-    }
+    .m-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(10,10,10,.7),transparent 50%); opacity:0; transition:opacity .38s; }
+    .m-item:hover .m-overlay { opacity:1; }
+    .m-label { position:absolute; bottom:0; left:0; right:0; padding:.85rem 1rem; font-family:var(--fh); font-size:.88rem; font-style:italic; color:var(--gold-l); transform:translateY(8px); opacity:0; transition:opacity .35s,transform .35s; z-index:2; }
+    .m-item:hover .m-label { opacity:1; transform:translateY(0); }
 
-    /* ─── BOOKING ─── */
-    #booking {
-      padding: 9rem 5vw;
-      background:
-        radial-gradient(ellipse 65% 55% at 50% 100%, rgba(201,169,110,0.055) 0%,transparent 70%),
-        var(--black);
-      position:relative; z-index:2;
+    /* ── WHY CHOOSE US ── */
+    #why { padding:8rem 5vw; background:var(--black); }
+    .why-header { text-align:center; margin-bottom:4rem; }
+    .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.8rem; max-width:1100px; margin:0 auto; }
+    .why-card {
+      background:var(--black3); border:1px solid rgba(201,169,110,.07);
+      padding:2.2rem 1.8rem; text-align:center;
+      transition:border-color .3s, box-shadow .3s;
     }
-    .booking-inner { max-width:660px; margin:0 auto; text-align:center; }
-    .booking-title {
-      font-family:var(--font-head);
-      font-size:clamp(2rem,4.5vw,3.4rem);
-      font-weight:700;
-      margin-bottom:0.7rem;
-    }
-    .booking-title em { font-style:italic; color:var(--rose); }
-    .booking-sub {
-      font-size:0.88rem;
-      color:rgba(245,240,235,0.4);
-      margin-bottom:3.5rem;
-      letter-spacing:0.04em;
-    }
+    .why-card:hover { border-color:rgba(201,169,110,.2); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+    .why-icon { width:52px; height:52px; margin:0 auto 1.3rem; background:rgba(201,169,110,.07); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .why-icon svg { width:24px; height:24px; }
+    .why-title { font-family:var(--fh); font-size:1.1rem; font-weight:700; color:var(--gold); margin-bottom:.7rem; }
+    .why-text { font-size:.83rem; line-height:1.75; color:var(--muted); }
 
-    .form-grid {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:1.1rem;
+    /* ── REVIEWS ── */
+    #reviews { padding:8rem 5vw; background:var(--black2); }
+    .reviews-header { text-align:center; margin-bottom:4rem; }
+    .reviews-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:1.6rem; max-width:1200px; margin:0 auto; }
+    .review-card {
+      background:var(--black3); border:1px solid rgba(201,169,110,.08);
+      padding:2rem 1.8rem; position:relative;
+      transition:border-color .3s, box-shadow .3s, transform .3s;
     }
-    @media(max-width:580px){ .form-grid { grid-template-columns:1fr; } }
+    .review-card:hover { border-color:rgba(201,169,110,.22); box-shadow:0 20px 50px rgba(0,0,0,.45); transform:translateY(-4px); }
+    .review-quote { font-size:3rem; line-height:.7; color:rgba(201,169,110,.2); font-family:var(--fh); margin-bottom:.8rem; select:none; }
+    .review-text { font-size:.87rem; line-height:1.8; color:rgba(245,240,235,.58); margin-bottom:1.4rem; font-style:italic; }
+    .review-stars { display:flex; gap:.25rem; margin-bottom:1rem; }
+    .review-stars span { color:var(--gold); font-size:.95rem; }
+    .review-author { display:flex; align-items:center; gap:.9rem; }
+    .review-avatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--gold-d),var(--gold)); display:flex; align-items:center; justify-content:center; font-family:var(--fh); font-weight:700; font-size:1rem; color:var(--black); flex-shrink:0; }
+    .review-name { font-family:var(--fh); font-size:.95rem; font-weight:700; color:var(--white); }
+    .review-meta { font-size:.72rem; color:var(--muted); letter-spacing:.04em; }
 
-    .form-group { display:flex; flex-direction:column; gap:0.45rem; text-align:left; }
-    .form-group.full { grid-column:1/-1; }
-    .form-group label {
-      font-size:0.68rem;
-      letter-spacing:0.15em;
-      text-transform:uppercase;
-      color:rgba(245,240,235,0.4);
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: var(--black3);
-      border: 1px solid rgba(255,255,255,0.07);
-      color: var(--white);
-      padding: 0.88rem 1.05rem;
-      font-family: var(--font-body);
-      font-size: 0.87rem;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      -webkit-appearance: none;
-      width:100%;
-    }
-    .form-group select {
-      cursor:none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a96e'/%3E%3C/svg%3E");
-      background-repeat:no-repeat;
-      background-position:right 1rem center;
-      padding-right:2.5rem;
-    }
-    .form-group select option { background:var(--black3); }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color:rgba(201,169,110,0.5);
-      box-shadow:0 0 0 3px rgba(201,169,110,0.07);
-    }
-    .form-group input::placeholder { color:rgba(245,240,235,0.18); }
-    .form-group textarea { resize:vertical; min-height:88px; }
-    input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(0.55) sepia(1) saturate(2) hue-rotate(5deg); cursor:pointer; }
+    /* ── CONTACT ── */
+    #contact { padding:8rem 5vw; background:var(--black); }
+    .contact-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    @media(max-width:800px){ .contact-inner { grid-template-columns:1fr; gap:3rem; } }
+    .contact-heading { font-family:var(--fh); font-size:clamp(1.9rem,4vw,3rem); font-weight:700; margin-bottom:1.4rem; line-height:1.15; }
+    .contact-heading em { font-style:italic; color:var(--gold); }
+    .contact-info { display:flex; flex-direction:column; gap:1.2rem; margin-bottom:2rem; }
+    .ci { display:flex; align-items:flex-start; gap:1rem; }
+    .ci-icon { width:38px; height:38px; border:1px solid rgba(201,169,110,.25); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--gold); }
+    .ci-icon svg { width:16px; height:16px; }
+    .ci-text { font-size:.88rem; line-height:1.7; color:var(--muted); }
+    .ci-text a { color:var(--gold); transition:opacity .2s; }
+    .ci-text a:hover { opacity:.75; }
+    .ci-label { font-size:.66rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:.15rem; }
+    .contact-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+    .map-box { border:1px solid rgba(201,169,110,.12); overflow:hidden; width:100%; height:340px; position:relative; background:var(--black3); }
+    .map-box iframe { width:100%; height:100%; border:none; filter:grayscale(1) invert(0.92) contrast(0.88); }
 
-    .form-submit {
-      margin-top:1.8rem;
-      width:100%;
-      padding:1rem;
-      background:transparent;
-      border:1px solid var(--gold);
-      color:var(--gold);
-      font-family:var(--font-body);
-      font-size:0.76rem;
-      letter-spacing:0.2em;
-      text-transform:uppercase;
-      cursor:none;
-      position:relative;
-      overflow:hidden;
-      transition:color 0.38s;
-    }
-    .form-submit::before {
-      content:'';
-      position:absolute; inset:0;
-      background:var(--gold);
-      transform:translateX(-101%);
-      transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
-      z-index:-1;
-    }
-    .form-submit:hover { color:var(--black); }
-    .form-submit:hover::before { transform:translateX(0); }
-
-    /* toast */
-    #form-toast {
-      position:fixed;
-      bottom:2rem;
-      left:50%;
-      transform:translateX(-50%) translateY(110px);
-      background:rgba(24,24,24,0.98);
-      border:1px solid rgba(201,169,110,0.35);
-      color:var(--gold);
-      padding:0.9rem 2.2rem;
-      font-size:0.8rem;
-      letter-spacing:0.1em;
-      z-index:9999;
-      transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);
-      white-space:nowrap;
-      backdrop-filter:blur(10px);
-    }
-    #form-toast.show { transform:translateX(-50%) translateY(0); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--black);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 4.5rem 5vw 2.5rem;
-      position:relative; z-index:2;
-    }
-    .footer-inner {
-      max-width:1100px;
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr;
-      gap:3rem;
-      margin-bottom:3rem;
-    }
-    @media(max-width:760px){ .footer-inner { grid-template-columns:1fr; gap:2rem; } }
-
-    .footer-logo {
-      font-family:var(--font-head);
-      font-size:1.4rem;
-      letter-spacing:0.04em;
-      color:var(--white);
-      text-decoration:none;
-      display:inline-block;
-      margin-bottom:1rem;
-    }
+    /* ── FOOTER ── */
+    footer { background:var(--black); border-top:1px solid rgba(255,255,255,.05); padding:4rem 5vw 2.2rem; }
+    .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+    @media(max-width:720px){ .footer-inner { grid-template-columns:1fr; gap:2rem; } }
+    .footer-logo { font-family:var(--fh); font-size:1.3rem; letter-spacing:.04em; color:var(--white); display:inline-block; margin-bottom:.9rem; }
     .footer-logo .he { color:var(--gold); }
     .footer-logo .she { color:var(--rose); }
-    .footer-tagline {
-      font-family:var(--font-head);
-      font-style:italic;
-      color:rgba(245,240,235,0.3);
-      font-size:0.88rem;
-      line-height:1.65;
-      max-width:250px;
-    }
-    .footer-col-title {
-      font-size:0.66rem;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      color:var(--gold);
-      margin-bottom:1.2rem;
-    }
-    .footer-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
-    .footer-links a {
-      font-size:0.84rem;
-      color:rgba(245,240,235,0.4);
-      text-decoration:none;
-      transition:color 0.25s;
-      cursor:none;
-    }
+    .footer-tagline { font-family:var(--fh); font-style:italic; color:rgba(245,240,235,.3); font-size:.86rem; line-height:1.65; max-width:240px; }
+    .footer-col-title { font-size:.64rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.1rem; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+    .footer-links a { font-size:.83rem; color:rgba(245,240,235,.38); transition:color .25s; cursor:none; }
     .footer-links a:hover { color:var(--gold); }
-    .footer-address {
-      font-size:0.82rem;
-      color:rgba(245,240,235,0.38);
-      line-height:1.85;
-    }
-    .footer-bottom {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding-top:1.8rem;
-      border-top:1px solid rgba(255,255,255,0.05);
-      font-size:0.7rem;
-      color:rgba(245,240,235,0.18);
-      letter-spacing:0.05em;
-    }
-    @media(max-width:580px){ .footer-bottom { flex-direction:column; gap:0.9rem; text-align:center; } }
-
-    .socials { display:flex; gap:0.9rem; margin-top:1.6rem; }
-    .socials a {
-      width:34px; height:34px;
-      border:1px solid rgba(255,255,255,0.08);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:rgba(245,240,235,0.38);
-      text-decoration:none;
-      transition:border-color 0.25s, color 0.25s;
-      cursor:none;
-    }
+    .footer-addr { font-size:.82rem; color:rgba(245,240,235,.36); line-height:1.85; }
+    .socials { display:flex; gap:.8rem; margin-top:1.5rem; }
+    .socials a { width:34px; height:34px; border:1px solid rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; color:rgba(245,240,235,.36); transition:border-color .25s,color .25s; cursor:none; }
     .socials a:hover { border-color:var(--gold); color:var(--gold); }
+    .footer-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:1.6rem; border-top:1px solid rgba(255,255,255,.05); font-size:.68rem; color:rgba(245,240,235,.18); letter-spacing:.04em; }
+    @media(max-width:560px){ .footer-bottom { flex-direction:column; gap:.8rem; text-align:center; } }
 
-    /* ─── MOBILE UTILS ─── */
-    @media(max-width:600px){
-      .hero-scissors { opacity:0.08; }
-      .hero-comb { opacity:0.06; }
-    }
+    /* ── MISC ── */
+    .section-bg-dark { background: radial-gradient(ellipse 65% 55% at 50% 100%, rgba(201,169,110,.05) 0%,transparent 70%), var(--black); }
   </style>
 </head>
 <body>
@@ -841,45 +357,51 @@
 <!-- CURSOR -->
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
+<!-- PARTICLES -->
+<canvas id="pc"></canvas>
 
-<!-- PARTICLE CANVAS -->
-<canvas id="particle-canvas"></canvas>
+<!-- ▒▒ FLOATING WHATSAPP ▒▒ -->
+<a id="wa-float" href="https://wa.me/917975446634?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20He%20%26%20She%20Unisex%20Salon!" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.107.548 4.085 1.508 5.806L0 24l6.32-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.812 9.812 0 0 1-5.002-1.365l-.357-.213-3.749.877.897-3.654-.232-.375A9.785 9.785 0 0 1 2.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+</a>
 
-<!-- ════════════════════════ NAVBAR ════════════════════════ -->
+<!-- ▒▒ NAVBAR ▒▒ -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo"><span class="he">He</span> &amp; <span class="she">She</span></a>
   <ul class="nav-links" id="nav-links">
+    <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#booking">Book</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta shimmer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
-  <button class="nav-burger" id="burger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a class="nav-cta shimmer" href="https://wa.me/917975446634?text=Hi%2C%20I%27d%20like%20to%20book%20at%20He%20%26%20She%20Salon!" target="_blank" rel="noopener">Book Now</a>
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- ════════════════════════ HERO ════════════════════════ -->
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
 <section id="hero">
-  <div class="hero-bg-layer" id="hero-bg"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-bg-overlay"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
 
-  <!-- Scissors SVG -->
-  <svg class="hero-scissors" id="sc-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="48" cy="42" r="22" stroke="#c9a96e" stroke-width="2.2"/>
-    <circle cx="152" cy="42" r="22" stroke="#b76e79" stroke-width="2.2"/>
-    <circle cx="48" cy="42" r="9" fill="#c9a96e" fill-opacity="0.25"/>
-    <circle cx="152" cy="42" r="9" fill="#b76e79" fill-opacity="0.25"/>
-    <line x1="64" y1="55" x2="172" y2="178" stroke="#c9a96e" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="136" y1="55" x2="28" y2="178" stroke="#b76e79" stroke-width="2.2" stroke-linecap="round"/>
-    <circle cx="100" cy="116" r="5" fill="rgba(201,169,110,0.5)"/>
+  <!-- Scissors -->
+  <svg class="hero-sc" id="sc-svg" viewBox="0 0 200 200" fill="none">
+    <circle cx="48" cy="42" r="22" stroke="#c9a96e" stroke-width="2"/>
+    <circle cx="152" cy="42" r="22" stroke="#b76e79" stroke-width="2"/>
+    <circle cx="48" cy="42" r="9" fill="#c9a96e" fill-opacity=".22"/>
+    <circle cx="152" cy="42" r="9" fill="#b76e79" fill-opacity=".22"/>
+    <line x1="64" y1="55" x2="172" y2="178" stroke="#c9a96e" stroke-width="2" stroke-linecap="round"/>
+    <line x1="136" y1="55" x2="28" y2="178" stroke="#b76e79" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="116" r="4.5" fill="rgba(201,169,110,.5)"/>
   </svg>
 
-  <!-- Comb SVG -->
-  <svg class="hero-comb" id="cb-svg" viewBox="0 0 180 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Comb -->
+  <svg class="hero-cb" id="cb-svg" viewBox="0 0 180 64" fill="none">
     <rect x="2" y="2" width="176" height="22" rx="6" stroke="#c9a96e" stroke-width="1.5"/>
     <line x1="22" y1="24" x2="22" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
     <line x1="40" y1="24" x2="40" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/>
@@ -893,468 +415,524 @@
   </svg>
 
   <div class="hero-content">
-    <h1 class="hero-title" id="hero-title">
-      <span class="hero-he">He</span>
-      <span class="hero-amp">&amp;</span>
-      <span class="hero-she">She</span>
+    <div class="hero-badge reveal">Premium Unisex Salon · Kolar Gold Fields</div>
+    <h1 class="hero-title reveal" id="hero-title">
+      <span class="he">He</span> &amp; <span class="she">She</span><br>
+      <span style="font-size:.55em;color:var(--white);letter-spacing:-.01em">Unisex Salon</span>
     </h1>
-    <p class="hero-tagline" id="hero-tagline">Where Style Meets Identity</p>
-    <a href="#booking" class="hero-cta shimmer">Book Your Experience</a>
+    <p class="hero-sub reveal" id="hero-sub">Professional Hair, Skin &amp; Grooming Services</p>
+    <p class="hero-location reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Bharat Nagar, KGF, Karnataka
+    </p>
+    <div class="hero-btns reveal">
+      <a class="btn-wa shimmer" href="https://wa.me/917975446634?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20He%20%26%20She%20Unisex%20Salon%20KGF!" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.107.548 4.085 1.508 5.806L0 24l6.32-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.812 9.812 0 0 1-5.002-1.365l-.357-.213-3.749.877.897-3.654-.232-.375A9.785 9.785 0 0 1 2.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+        Book on WhatsApp
+      </a>
+      <a class="btn-outline" href="#services">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        View Services
+      </a>
+    </div>
   </div>
-
-  <div class="scroll-indicator">Scroll</div>
+  <div class="scroll-ind">Scroll</div>
 </section>
 
-<!-- ════════════════════════ SERVICES ════════════════════════ -->
-<section id="services">
-  <div class="services-header reveal">
-    <span class="section-label">What We Offer</span>
-    <h2 class="services-title">Crafted for <em>Every</em> You</h2>
-    <div class="gold-divider"></div>
-  </div>
-
-  <div class="services-grid">
-
-    <div class="service-card reveal" data-tilt>
-      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
-        <circle cx="25" cy="25" r="24" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.35"/>
-        <path d="M15 36 Q19 18 25 16 Q31 18 35 36" stroke="#c9a96e" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <circle cx="25" cy="12" r="3" fill="#c9a96e" fill-opacity="0.55"/>
-        <line x1="20" y1="27" x2="30" y2="27" stroke="#c9a96e" stroke-width="1.2" stroke-opacity="0.4"/>
-        <line x1="18" y1="32" x2="32" y2="32" stroke="#c9a96e" stroke-width="1.2" stroke-opacity="0.4"/>
-      </svg>
-      <h3 class="service-name">Hair</h3>
-      <p class="service-desc">Expert cuts, coloring &amp; treatments tailored to your texture and lifestyle.</p>
-      <ul class="service-items">
-        <li>Haircut &amp; Style <span>from ₹499</span></li>
-        <li>Global Color <span>from ₹1,499</span></li>
-        <li>Keratin Treatment <span>from ₹2,999</span></li>
-        <li>Balayage / Highlights <span>from ₹2,499</span></li>
-      </ul>
-      <div class="card-bar"></div>
-    </div>
-
-    <div class="service-card reveal" data-tilt style="transition-delay:.12s">
-      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
-        <circle cx="25" cy="25" r="24" stroke="#b76e79" stroke-width="1" stroke-opacity="0.35"/>
-        <ellipse cx="25" cy="21" rx="10" ry="12" stroke="#b76e79" stroke-width="1.8" fill="none"/>
-        <path d="M17 33 Q25 42 33 33" stroke="#b76e79" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-        <circle cx="21" cy="19" r="1.5" fill="#b76e79" fill-opacity="0.5"/>
-        <circle cx="29" cy="19" r="1.5" fill="#b76e79" fill-opacity="0.5"/>
-      </svg>
-      <h3 class="service-name">Skin</h3>
-      <p class="service-desc">Revitalizing facials, waxing &amp; advanced skincare rituals for a radiant glow.</p>
-      <ul class="service-items">
-        <li>Classic Facial <span>from ₹799</span></li>
-        <li>Gold Facial <span>from ₹1,599</span></li>
-        <li>Full Body Waxing <span>from ₹1,299</span></li>
-        <li>Threading &amp; Cleanup <span>from ₹199</span></li>
-      </ul>
-      <div class="card-bar"></div>
-    </div>
-
-    <div class="service-card reveal" data-tilt style="transition-delay:.24s">
-      <svg class="service-icon" viewBox="0 0 50 50" fill="none">
-        <circle cx="25" cy="25" r="24" stroke="#e2c99a" stroke-width="1" stroke-opacity="0.35"/>
-        <path d="M17 38 L17 24 Q17 17 21 17 L29 17 Q33 17 33 24 L33 38 Q33 40 31 40 L19 40 Q17 40 17 38Z" stroke="#e2c99a" stroke-width="1.8" fill="none"/>
-        <path d="M19 17 Q21 11 25 10 Q29 11 31 17" stroke="#e2c99a" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".55"/>
-      </svg>
-      <h3 class="service-name">Nails</h3>
-      <p class="service-desc">Manicures, pedicures &amp; nail art that turn your hands into a statement.</p>
-      <ul class="service-items">
-        <li>Basic Manicure <span>from ₹399</span></li>
-        <li>Gel Extensions <span>from ₹999</span></li>
-        <li>Nail Art (per nail) <span>from ₹49</span></li>
-        <li>Spa Pedicure <span>from ₹699</span></li>
-      </ul>
-      <div class="card-bar"></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════ GALLERY ════════════════════════ -->
-<section id="gallery">
-  <div class="gallery-header reveal">
-    <span class="section-label">Our Work</span>
-    <h2 class="gallery-title">Moments of <em>Transformation</em></h2>
-    <div class="gold-divider"></div>
-  </div>
-
-  <div class="masonry reveal">
-
-    <div class="masonry-item" data-parallax="0.07">
-      <div class="gallery-box" style="height:310px;background:linear-gradient(135deg,#16100a 0%,#261c0e 55%,#16100a 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%">
-          <svg width="44" height="44" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.45"/><path d="M15 36 Q19 18 25 16 Q31 18 35 36" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-          Hair Transformation
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label">Colour &amp; Cut</div>
-    </div>
-
-    <div class="masonry-item" data-parallax="0.1" style="margin-top:38px">
-      <div class="gallery-box" style="height:230px;background:linear-gradient(135deg,#170d11 0%,#261318 55%,#170d11 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(183,110,121,0.3)">
-          <svg width="40" height="40" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#b76e79" stroke-width="1" stroke-opacity="0.45"/><ellipse cx="25" cy="21" rx="9" ry="11" stroke="#b76e79" stroke-width="1.5" fill="none"/></svg>
-          Skin Ritual
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label" style="color:var(--rose-light)">Facial Glow</div>
-    </div>
-
-    <div class="masonry-item" data-parallax="0.04">
-      <div class="gallery-box" style="height:195px;background:linear-gradient(135deg,#0c1008 0%,#141b0f 55%,#0c1008 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(226,201,154,0.28)">
-          <svg width="38" height="38" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#e2c99a" stroke-width="1" stroke-opacity="0.45"/><path d="M17 38 L17 24 Q17 17 21 17 L29 17 Q33 17 33 24 L33 38 Q33 40 31 40 L19 40 Q17 40 17 38Z" stroke="#e2c99a" stroke-width="1.5" fill="none"/></svg>
-          Nail Art
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label" style="color:var(--gold-light)">Gel Extensions</div>
-    </div>
-
-    <div class="masonry-item" data-parallax="0.08" style="margin-top:-18px">
-      <div class="gallery-box" style="height:275px;background:linear-gradient(135deg,#11100a 0%,#1d1c10 55%,#11100a 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%">
-          <svg width="44" height="22" viewBox="0 0 180 64" fill="none"><rect x="2" y="2" width="176" height="22" rx="5" stroke="#c9a96e" stroke-width="1.5"/><line x1="22" y1="24" x2="22" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="44" y1="24" x2="44" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="24" x2="66" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="88" y1="24" x2="88" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="110" y1="24" x2="110" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="132" y1="24" x2="132" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="154" y1="24" x2="154" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/></svg>
-          Styling Session
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label">Blow Dry &amp; Set</div>
-    </div>
-
-    <div class="masonry-item" data-parallax="0.12">
-      <div class="gallery-box" style="height:350px;background:linear-gradient(135deg,#0f0a13 0%,#180f1e 55%,#0f0a13 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%;color:rgba(183,110,121,0.3)">
-          <div style="width:64px;height:64px;border-radius:50%;border:1px solid rgba(183,110,121,0.3);display:flex;align-items:center;justify-content:center">
-            <div style="width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(183,110,121,0.2),transparent)"></div>
-          </div>
-          Spa &amp; Wellness
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label" style="color:var(--rose-light)">Luxury Spa</div>
-    </div>
-
-    <div class="masonry-item" data-parallax="0.05" style="margin-top:24px">
-      <div class="gallery-box" style="height:215px;background:linear-gradient(135deg,#090f09 0%,#111911 55%,#090f09 100%)">
-        <div class="gallery-placeholder-inner" style="height:100%">
-          <svg width="46" height="46" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.35"/><circle cx="25" cy="25" r="13" stroke="#c9a96e" stroke-width="1" stroke-opacity="0.2"/><circle cx="25" cy="25" r="5" fill="#c9a96e" fill-opacity="0.14"/></svg>
-          Bridal Look
-        </div>
-        <div class="gallery-overlay"></div>
-      </div>
-      <div class="gallery-label">Bridal Package</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════════════════ ABOUT ════════════════════════ -->
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
 <section id="about">
   <div class="about-inner">
     <div class="reveal">
       <span class="section-label">Our Story</span>
-      <h2 class="about-heading">Where Every Client<br>Becomes a <em>Canvas</em></h2>
-      <p class="about-text">He &amp; She Unisex Salon was born from a simple belief: beauty has no gender. Founded in 2012, we've built a sanctuary where professionals craft experiences as unique as the individuals who walk through our doors.</p>
-      <p class="about-text">Our team of master stylists, estheticians, and nail artists bring together decades of expertise, constant education, and genuine passion. We don't just change appearances — we help you arrive at the version of yourself you've always imagined.</p>
+      <h2 class="about-heading">Your Trusted Salon<br>in <em>Kolar Gold Fields</em></h2>
+      <p class="about-text">He &amp; She Unisex Salon has been serving the people of Bharat Nagar, KGF with pride. We believe everyone deserves to look and feel their best — regardless of age or gender. Our unisex setup makes us the go-to destination for the whole family.</p>
+      <p class="about-text">Our experienced team of stylists and beauty professionals are trained in the latest techniques, using quality products to ensure every visit leaves you feeling refreshed, confident, and cared for. Customer satisfaction isn't just a goal — it's our promise.</p>
+      <p class="about-text">Whether you're looking for a quick beard trim, a bridal makeover, or a relaxing facial, we've got you covered right here in KGF.</p>
       <div class="about-stats">
-        <div>
-          <div class="stat-num">12+</div>
-          <div class="stat-label">Years of Excellence</div>
-        </div>
-        <div>
-          <div class="stat-num" style="color:var(--rose)">8K+</div>
-          <div class="stat-label">Happy Clients</div>
-        </div>
-        <div>
-          <div class="stat-num">24</div>
-          <div class="stat-label">Expert Artists</div>
-        </div>
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Happy Clients</div></div>
+        <div class="stat"><div class="stat-num" style="color:var(--rose)">5+</div><div class="stat-label">Years in KGF</div></div>
+        <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Services</div></div>
       </div>
     </div>
-
-    <div class="orb-scene reveal" style="transition-delay:.18s">
-      <div class="about-orb">
-        <div class="orb-ring"></div>
-        <div class="orb-ring"></div>
-        <div class="orb-ring"></div>
-        <div class="orb-core"></div>
-        <div class="orb-dot"></div>
-        <div class="orb-dot"></div>
-        <div class="orb-dot"></div>
-      </div>
-    </div>
+    <div class="about-img-box reveal" style="transition-delay:.18s"></div>
   </div>
 </section>
 
-<!-- ════════════════════════ BOOKING ════════════════════════ -->
-<section id="booking">
-  <div class="booking-inner">
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<section id="services">
+  <div class="services-header reveal">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <div class="gold-div"></div>
+    <p style="font-size:.9rem;color:var(--muted);margin-top:1rem;max-width:520px;margin-left:auto;margin-right:auto">Top-quality grooming &amp; beauty services at affordable prices — right here in Kolar Gold Fields.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <!-- Haircut -->
+    <div class="svc-card reveal">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <path d="M14 36 Q18 18 24 16 Q30 18 34 36" stroke="#c9a96e" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <circle cx="24" cy="12" r="3" fill="#c9a96e" fill-opacity=".55"/>
+        <line x1="19" y1="27" x2="29" y2="27" stroke="#c9a96e" stroke-width="1.2" stroke-opacity=".4"/>
+      </svg>
+      <div class="svc-name">Haircut &amp; Styling</div>
+      <p class="svc-desc">Precision cuts for men, women, and kids. Wash, cut &amp; blow-dry with expert finishing for any hair type.</p>
+      <span class="svc-price">Starting ₹100</span>
+      <div class="svc-bar"></div>
+    </div>
+
+    <!-- Beard -->
+    <div class="svc-card reveal" style="transition-delay:.08s">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <ellipse cx="24" cy="20" rx="9" ry="8" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+        <path d="M15 28 Q16 38 24 40 Q32 38 33 28" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="svc-name">Beard Grooming</div>
+      <p class="svc-desc">Classic shave, beard trim, shape &amp; conditioning. Look sharp and well-groomed every time.</p>
+      <span class="svc-price">Starting ₹80</span>
+      <div class="svc-bar"></div>
+    </div>
+
+    <!-- Facial -->
+    <div class="svc-card reveal" style="transition-delay:.16s">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <circle cx="24" cy="22" r="10" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+        <path d="M17 34 Q24 42 31 34" stroke="#c9a96e" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        <circle cx="20" cy="20" r="1.5" fill="#c9a96e" fill-opacity=".5"/>
+        <circle cx="28" cy="20" r="1.5" fill="#c9a96e" fill-opacity=".5"/>
+      </svg>
+      <div class="svc-name">Facial &amp; Skincare</div>
+      <p class="svc-desc">Revitalizing facials, cleanup, de-tan, and skin treatments for a radiant, healthy glow.</p>
+      <span class="svc-price">Starting ₹200</span>
+      <div class="svc-bar"></div>
+    </div>
+
+    <!-- Hair Color -->
+    <div class="svc-card reveal" style="transition-delay:.24s">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <path d="M16 34 Q18 22 24 18 Q30 22 32 34" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M20 20 Q24 14 28 20" stroke="#c9a96e" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-opacity=".5"/>
+        <circle cx="24" cy="36" r="2.5" fill="#c9a96e" fill-opacity=".4"/>
+      </svg>
+      <div class="svc-name">Hair Coloring</div>
+      <p class="svc-desc">Global color, highlights, balayage, and fashion shades. Quality products, long-lasting results.</p>
+      <span class="svc-price">Starting ₹500</span>
+      <div class="svc-bar"></div>
+    </div>
+
+    <!-- Bridal -->
+    <div class="svc-card reveal" style="transition-delay:.32s">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <path d="M12 36 Q14 26 18 22 Q24 18 30 22 Q34 26 36 36" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="24" cy="16" r="4" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+        <path d="M20 38 Q22 40 24 38 Q26 40 28 38" stroke="#c9a96e" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".6"/>
+      </svg>
+      <div class="svc-name">Bridal &amp; Groom</div>
+      <p class="svc-desc">Complete bridal makeup and groom packages for your special day. Look flawless from the first look to the last dance.</p>
+      <span class="svc-price">Starting ₹2,000</span>
+      <div class="svc-bar"></div>
+    </div>
+
+    <!-- Nails -->
+    <div class="svc-card reveal" style="transition-delay:.4s">
+      <svg class="svc-icon" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/>
+        <path d="M16 38 L16 24 Q16 17 20 17 L28 17 Q32 17 32 24 L32 38 Q32 40 30 40 L18 40 Q16 40 16 38Z" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+        <path d="M18 17 Q20 11 24 10 Q28 11 30 17" stroke="#c9a96e" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".5"/>
+      </svg>
+      <div class="svc-name">Manicure &amp; Pedicure</div>
+      <p class="svc-desc">Hand and foot care treatments including shaping, buffing, and polishing for clean, beautiful nails.</p>
+      <span class="svc-price">Starting ₹150</span>
+      <div class="svc-bar"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     GALLERY
+══════════════════════════════════════ -->
+<section id="gallery">
+  <div class="gallery-header reveal">
+    <span class="section-label">Our Work</span>
+    <h2 class="section-title">Salon <em>Gallery</em></h2>
+    <div class="gold-div"></div>
+  </div>
+
+  <div class="masonry reveal">
+
+    <div class="m-item" data-parallax=".07">
+      <div class="m-box">
+        <div class="m-ph" style="height:300px;background:linear-gradient(135deg,#16100a,#261c0e)">
+          <svg width="42" height="42" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#c9a96e" stroke-width="1" stroke-opacity=".4"/><path d="M14 36 Q18 18 24 16 Q30 18 34 36" stroke="#c9a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          Haircut &amp; Styling
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label">Expert Haircut</div>
+    </div>
+
+    <div class="m-item" data-parallax=".1" style="margin-top:35px">
+      <div class="m-box">
+        <div class="m-ph" style="height:225px;background:linear-gradient(135deg,#170d11,#261318);color:rgba(183,110,121,.32)">
+          <svg width="38" height="38" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#b76e79" stroke-width="1" stroke-opacity=".4"/><circle cx="24" cy="21" rx="9" ry="10" r="9" stroke="#b76e79" stroke-width="1.5" fill="none"/></svg>
+          Facial Glow
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label" style="color:var(--rose-light, #d4949f)">Skin Ritual</div>
+    </div>
+
+    <div class="m-item" data-parallax=".04">
+      <div class="m-box">
+        <div class="m-ph" style="height:195px;background:linear-gradient(135deg,#0d1208,#141b10);color:rgba(201,169,110,.24)">
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#e2c99a" stroke-width="1" stroke-opacity=".4"/><path d="M16 38 L16 24 Q16 17 20 17 L28 17 Q32 17 32 24 L32 38 Q32 40 30 40 L18 40 Q16 40 16 38Z" stroke="#e2c99a" stroke-width="1.5" fill="none"/></svg>
+          Nail Care
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label" style="color:#e2c99a">Manicure</div>
+    </div>
+
+    <div class="m-item" data-parallax=".08" style="margin-top:-22px">
+      <div class="m-box">
+        <div class="m-ph" style="height:265px;background:linear-gradient(135deg,#111009,#1d1c10)">
+          <svg width="42" height="21" viewBox="0 0 180 64" fill="none"><rect x="2" y="2" width="176" height="22" rx="5" stroke="#c9a96e" stroke-width="1.5"/><line x1="22" y1="24" x2="22" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="44" y1="24" x2="44" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="66" y1="24" x2="66" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="88" y1="24" x2="88" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="110" y1="24" x2="110" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="132" y1="24" x2="132" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/><line x1="154" y1="24" x2="154" y2="62" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Beard Styling
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label">Beard Grooming</div>
+    </div>
+
+    <div class="m-item" data-parallax=".12">
+      <div class="m-box">
+        <div class="m-ph" style="height:340px;background:linear-gradient(135deg,#0f0a13,#180f1e);color:rgba(183,110,121,.28)">
+          <div style="width:60px;height:60px;border-radius:50%;border:1px solid rgba(183,110,121,.3);display:flex;align-items:center;justify-content:center;margin-bottom:.8rem"><div style="width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,rgba(183,110,121,.2),transparent)"></div></div>
+          Bridal Look
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label" style="color:#d4949f">Bridal Package</div>
+    </div>
+
+    <div class="m-item" data-parallax=".05" style="margin-top:28px">
+      <div class="m-box">
+        <div class="m-ph" style="height:210px;background:linear-gradient(135deg,#090f09,#111911)">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#c9a96e" stroke-width="1" stroke-opacity=".35"/><circle cx="24" cy="24" r="12" stroke="#c9a96e" stroke-width="1" stroke-opacity=".2"/><circle cx="24" cy="24" r="5" fill="#c9a96e" fill-opacity=".14"/></svg>
+          Hair Coloring
+        </div>
+      </div>
+      <div class="m-overlay"></div>
+      <div class="m-label">Color &amp; Highlights</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WHY CHOOSE US
+══════════════════════════════════════ -->
+<section id="why">
+  <div class="why-header reveal">
+    <span class="section-label">Why Us</span>
+    <h2 class="section-title">Why Choose <em>He &amp; She</em></h2>
+    <div class="gold-div"></div>
+  </div>
+  <div class="why-grid">
+
+    <div class="why-card reveal">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="why-title">Experienced Professionals</div>
+      <p class="why-text">Our trained stylists and beauty experts bring years of hands-on experience to every service.</p>
+    </div>
+
+    <div class="why-card reveal" style="transition-delay:.1s">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="why-title">Hygienic Environment</div>
+      <p class="why-text">We maintain strict hygiene standards. All tools are sterilized after every use for your safety.</p>
+    </div>
+
+    <div class="why-card reveal" style="transition-delay:.2s">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.6"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="why-title">Affordable Pricing</div>
+      <p class="why-text">Premium quality services at prices that work for every budget in Kolar Gold Fields.</p>
+    </div>
+
+    <div class="why-card reveal" style="transition-delay:.3s">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="why-title">100% Satisfaction</div>
+      <p class="why-text">Your happiness is our priority. We don't stop until you love what you see in the mirror.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     REVIEWS
+══════════════════════════════════════ -->
+<section id="reviews" style="padding:8rem 5vw;background:var(--black2)">
+  <div class="reviews-header reveal">
+    <span class="section-label">Customer Love</span>
+    <h2 class="section-title">What Our <em>Clients Say</em></h2>
+    <div class="gold-div"></div>
+  </div>
+  <div class="reviews-grid">
+
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="review-text">Best salon in KGF hands down! The haircut was perfect and the staff is so friendly. I've been coming here for 2 years and never been disappointed.</p>
+      <div class="review-author">
+        <div class="review-avatar">R</div>
+        <div><div class="review-name">Ravi Kumar</div><div class="review-meta">Bharat Nagar, KGF · Regular Client</div></div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:.1s">
+      <div class="review-quote">"</div>
+      <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="review-text">Got my bridal makeup done here and looked absolutely stunning on my wedding day. Very professional team and they understood exactly what I wanted!</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background:linear-gradient(135deg,var(--rose),#d4949f)">P</div>
+        <div><div class="review-name">Priya Nair</div><div class="review-meta">KGF · Bridal Package</div></div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:.2s">
+      <div class="review-quote">"</div>
+      <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="review-text">The beard trim and shave here is something else. Clean, precise, and they use quality products. My go-to place in KGF for men's grooming.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background:linear-gradient(135deg,#6e8cb7,#8eadd4)">A</div>
+        <div><div class="review-name">Ajay Reddy</div><div class="review-meta">Kolar Gold Fields · Men's Grooming</div></div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:.3s">
+      <div class="review-quote">"</div>
+      <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="review-text">Took my whole family here — haircuts for my husband and two kids, facial for me. All done perfectly. Very clean salon and reasonable rates!</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background:linear-gradient(135deg,#9e7d46,#c9a96e)">S</div>
+        <div><div class="review-name">Sunitha Krishnamurthy</div><div class="review-meta">KGF · Family Visit</div></div>
+      </div>
+    </div>
+
+    <div class="review-card reveal" style="transition-delay:.4s">
+      <div class="review-quote">"</div>
+      <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="review-text">Hair coloring came out exactly as I wanted! They suggested the perfect shade for my skin tone. Great experience overall — highly recommend to everyone in KGF.</p>
+      <div class="review-author">
+        <div class="review-avatar" style="background:linear-gradient(135deg,#b76e79,#d4949f)">M</div>
+        <div><div class="review-name">Meena Sharma</div><div class="review-meta">Bharat Nagar · Hair Coloring</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section id="contact" class="section-bg-dark">
+  <div class="contact-inner">
     <div class="reveal">
-      <span class="section-label">Reserve Your Visit</span>
-      <h2 class="booking-title">Book an <em>Appointment</em></h2>
-      <div class="gold-divider"></div>
-      <p class="booking-sub">Reserve your chair. We'll handle the rest.</p>
-    </div>
+      <span class="section-label">Find Us</span>
+      <h2 class="contact-heading">Visit Us in <em>KGF</em></h2>
+      <p style="font-size:.9rem;color:var(--muted);margin-bottom:2rem;line-height:1.8">Walk in anytime or send us a WhatsApp message to book your appointment. We're always happy to welcome you!</p>
 
-    <form id="booking-form" class="reveal" style="transition-delay:.15s" onsubmit="handleSubmit(event)">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="fname">Full Name</label>
-          <input type="text" id="fname" placeholder="Riya Sharma" required />
+      <div class="contact-info">
+        <div class="ci">
+          <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="ci-text">
+            <span class="ci-label">Address</span>
+            He &amp; She Unisex Salon<br>Bharat Nagar, Kolar Gold Fields<br>Karnataka – 563120
+          </div>
         </div>
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="+91 98765 43210" required />
+        <div class="ci">
+          <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="ci-text">
+            <span class="ci-label">Phone / WhatsApp</span>
+            <a href="tel:+917975446634">+91 79754 46634</a>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="service">Service</label>
-          <select id="service" required>
-            <option value="" disabled selected>Choose a service</option>
-            <optgroup label="— Hair">
-              <option>Haircut &amp; Style</option>
-              <option>Global Color</option>
-              <option>Keratin Treatment</option>
-              <option>Balayage / Highlights</option>
-            </optgroup>
-            <optgroup label="— Skin">
-              <option>Classic Facial</option>
-              <option>Gold Facial</option>
-              <option>Full Body Waxing</option>
-              <option>Threading &amp; Cleanup</option>
-            </optgroup>
-            <optgroup label="— Nails">
-              <option>Basic Manicure</option>
-              <option>Gel Extensions</option>
-              <option>Nail Art</option>
-              <option>Spa Pedicure</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="appt-date">Preferred Date</label>
-          <input type="date" id="appt-date" required />
-        </div>
-        <div class="form-group full">
-          <label for="notes">Special Requests <span style="opacity:.5">(optional)</span></label>
-          <textarea id="notes" placeholder="Any preferences, allergies, or notes…"></textarea>
+        <div class="ci">
+          <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="ci-text">
+            <span class="ci-label">Working Hours</span>
+            Monday – Saturday &nbsp; 9:00 AM – 9:00 PM<br>
+            Sunday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10:00 AM – 7:00 PM
+          </div>
         </div>
       </div>
-      <button type="submit" class="form-submit shimmer">Confirm My Appointment</button>
-    </form>
+
+      <div class="contact-btns">
+        <a class="btn-wa shimmer" href="https://wa.me/917975446634?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20He%20%26%20She%20Unisex%20Salon%20KGF!" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.107.548 4.085 1.508 5.806L0 24l6.32-1.48A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.812 9.812 0 0 1-5.002-1.365l-.357-.213-3.749.877.897-3.654-.232-.375A9.785 9.785 0 0 1 2.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+          WhatsApp Us
+        </a>
+        <a class="btn-outline" href="tel:+917975446634">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.59a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Now
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay:.18s">
+      <div class="map-box">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3883.802064282597!2d78.26710117387716!3d12.944285687357637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6d4b91f79bbf%3A0x1b4b45fc55bc39c1!2sBharat%20Nagar%2C%20Kolar%20Gold%20Fields%2C%20Karnataka%20563120!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="He & She Salon location – Bharat Nagar, Kolar Gold Fields">
+        </iframe>
+      </div>
+      <p style="font-size:.75rem;color:rgba(245,240,235,.3);margin-top:.8rem;text-align:center;letter-spacing:.05em">Bharat Nagar, Kolar Gold Fields, Karnataka 563120</p>
+    </div>
   </div>
 </section>
 
-<div id="form-toast">✦ Request received — we'll confirm your appointment shortly!</div>
-
-<!-- ════════════════════════ FOOTER ════════════════════════ -->
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div>
-      <a href="#hero" class="footer-logo"><span class="he">He</span> &amp; <span class="she">She</span></a>
-      <p class="footer-tagline">"A sanctuary where every expression of you is celebrated."</p>
-      <div class="socials">
-        <a href="#" aria-label="Instagram">
+      <a href="#hero" class="footer-logo"><span class="he">He</span> &amp; <span class="she">She</span> Unisex Salon</a>
+      <p class="footer-tagline">"Where Style Meets Identity — your trusted salon in Kolar Gold Fields."</p>
+      <div class="socials" style="margin-top:1.5rem">
+        <a href="#" aria-label="Instagram" title="Follow us on Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
         </a>
         <a href="#" aria-label="Facebook">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
-        <a href="#" aria-label="YouTube">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="#" aria-label="WhatsApp">
+        <a href="https://wa.me/917975446634" target="_blank" rel="noopener" aria-label="WhatsApp">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         </a>
       </div>
+      <p style="font-size:.68rem;color:rgba(245,240,235,.2);margin-top:1.2rem;letter-spacing:.04em">📸 Follow us on Instagram for latest looks &amp; offers!</p>
     </div>
 
     <div>
       <div class="footer-col-title">Quick Links</div>
       <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#booking">Book Appointment</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
 
     <div>
-      <div class="footer-col-title">Visit Us</div>
-      <div class="footer-address">
-        12, Lotus Tower, MG Road<br>
-        Bengaluru, KA 560001<br><br>
-        <a href="tel:+918012345678" style="color:var(--gold);text-decoration:none">+91 80 1234 5678</a><br><br>
-        Mon – Sat &nbsp;9am – 9pm<br>
-        Sunday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10am – 7pm
+      <div class="footer-col-title">Contact Us</div>
+      <div class="footer-addr">
+        Bharat Nagar<br>
+        Kolar Gold Fields, Karnataka<br>
+        Pin – 563120<br><br>
+        <a href="tel:+917975446634" style="color:var(--gold);text-decoration:none">+91 79754 46634</a><br><br>
+        Mon – Sat: 9am – 9pm<br>
+        Sunday: 10am – 7pm
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <span>© 2026 He &amp; She Unisex Salon. All rights reserved.</span>
-    <span style="font-family:var(--font-head);font-style:italic;color:rgba(201,169,110,0.28)">Where Style Meets Identity</span>
+    <span>© 2026 He &amp; She Unisex Salon, KGF. All rights reserved.</span>
+    <span style="font-family:var(--fh);font-style:italic;color:rgba(201,169,110,.26)">Best Salon in Kolar Gold Fields</span>
   </div>
 </footer>
 
-<!-- ════════════════════════ JAVASCRIPT ════════════════════════ -->
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
 <script>
-(function() {
+(function(){
 
-  /* ── CUSTOM CURSOR ── */
+  /* ── CURSOR ── */
   const dot  = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
-  let mx = window.innerWidth/2, my = window.innerHeight/2;
-  let rx = mx, ry = my;
-
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
-
-  function tickCursor() {
-    rx += (mx - rx) * 0.11;
-    ry += (my - ry) * 0.11;
-    ring.style.left = rx+'px';
-    ring.style.top  = ry+'px';
-    requestAnimationFrame(tickCursor);
-  }
-  tickCursor();
-
-  document.querySelectorAll('a, button, .service-card, .masonry-item, select, input, textarea').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width  = '54px';
-      ring.style.height = '54px';
-      ring.style.borderColor = 'rgba(201,169,110,0.85)';
-      dot.style.transform = 'translate(-50%,-50%) scale(1.9)';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width  = '36px';
-      ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(201,169,110,0.55)';
-      dot.style.transform = 'translate(-50%,-50%) scale(1)';
-    });
+  let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+  (function tickC(){ rx+=(mx-rx)*.11; ry+=(my-ry)*.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(tickC); })();
+  document.querySelectorAll('a,button,.svc-card,.m-item,.review-card,.why-card,input,select,textarea').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.style.width='54px'; ring.style.height='54px'; ring.style.borderColor='rgba(201,169,110,.9)'; dot.style.transform='translate(-50%,-50%) scale(1.8)'; });
+    el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(201,169,110,.55)'; dot.style.transform='translate(-50%,-50%) scale(1)'; });
   });
 
-  /* ── PARTICLE CANVAS ── */
-  const canvas = document.getElementById('particle-canvas');
-  const ctx    = canvas.getContext('2d');
-
-  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas, {passive:true});
-
-  const PARTICLE_COUNT = 130;
-  const particles = [];
-
-  function makeParticle() {
-    return {
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.4 + 0.3,
-      vx: (Math.random() - 0.5) * 0.16,
-      vy: -(Math.random() * 0.15 + 0.04),
-      alpha: Math.random() * 0.5 + 0.1,
-      color: Math.random() > 0.5 ? '201,169,110' : '183,110,121',
-      life: 0,
-      maxLife: Math.random() * 320 + 200,
-    };
-  }
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const p = makeParticle();
-    p.life = Math.floor(Math.random() * p.maxLife);
-    particles.push(p);
-  }
-
-  function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of particles) {
-      p.x += p.vx; p.y += p.vy; p.life++;
-      if (p.life > p.maxLife || p.y < -10 || p.x < -10 || p.x > canvas.width + 10) {
-        Object.assign(p, makeParticle()); p.y = canvas.height + 5; p.life = 0;
-      }
-      const progress = p.life / p.maxLife;
-      const fade = 1 - Math.abs(progress - 0.5) * 2;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${p.color},${p.alpha * fade})`;
-      ctx.fill();
+  /* ── PARTICLES ── */
+  const cv=document.getElementById('pc'),ctx=cv.getContext('2d');
+  function rsz(){ cv.width=innerWidth; cv.height=innerHeight; }
+  rsz(); addEventListener('resize',rsz,{passive:true});
+  const PS=[], N=110;
+  function mkP(){ return { x:Math.random()*cv.width, y:Math.random()*cv.height, r:Math.random()*1.3+.3, vx:(Math.random()-.5)*.15, vy:-(Math.random()*.14+.04), a:Math.random()*.45+.1, c:Math.random()>.5?'201,169,110':'183,110,121', life:0, ml:Math.random()*300+180 }; }
+  for(let i=0;i<N;i++){ const p=mkP(); p.life=Math.floor(Math.random()*p.ml); PS.push(p); }
+  (function drawP(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    for(const p of PS){ p.x+=p.vx; p.y+=p.vy; p.life++;
+      if(p.life>p.ml||p.y<-10||p.x<-10||p.x>cv.width+10){ Object.assign(p,mkP()); p.y=cv.height+5; p.life=0; }
+      const fade=1-Math.abs(p.life/p.ml-.5)*2;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.c},${p.a*fade})`; ctx.fill();
     }
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
+    requestAnimationFrame(drawP);
+  })();
 
-  /* ── SCROLL PARALLAX ── */
-  const heroBg      = document.getElementById('hero-bg');
-  const heroTitle   = document.getElementById('hero-title');
-  const heroTagline = document.getElementById('hero-tagline');
-  const scSvg       = document.getElementById('sc-svg');
-  const cbSvg       = document.getElementById('cb-svg');
-  const navbar      = document.getElementById('navbar');
-  const galleryItems = document.querySelectorAll('.masonry-item[data-parallax]');
-
-  let scrollTick = false;
-  function onScroll() {
-    if (!scrollTick) { requestAnimationFrame(applyScroll); scrollTick = true; }
+  /* ── SCROLL PARALLAX + NAV ── */
+  const heroBg=document.getElementById('hero-bg');
+  const heroT =document.getElementById('hero-title');
+  const heroS =document.getElementById('hero-sub');
+  const scSvg =document.getElementById('sc-svg');
+  const cbSvg =document.getElementById('cb-svg');
+  const nav   =document.getElementById('navbar');
+  const galItems=document.querySelectorAll('.m-item[data-parallax]');
+  let tick=false;
+  function doScroll(){
+    const y=scrollY;
+    nav.classList.toggle('scrolled',y>50);
+    heroBg.style.transform=`translateY(${y*.08}px)`;
+    heroT.style.transform=`translateY(${y*.2}px)`;
+    heroS.style.transform=`translateY(${y*.26}px)`;
+    if(scSvg) scSvg.style.transform=`translateY(${y*.36}px) rotateZ(${y*.016}deg)`;
+    if(cbSvg) cbSvg.style.transform=`translateY(${y*.3}px) rotateZ(${-y*.011}deg)`;
+    galItems.forEach(el=>{ const s=parseFloat(el.dataset.parallax); const r=el.getBoundingClientRect(); const mid=innerHeight/2-r.top-r.height/2; el.style.transform=`translateY(${mid*s}px)`; });
+    tick=false;
   }
-  function applyScroll() {
-    const y = window.scrollY;
-    navbar.classList.toggle('scrolled', y > 50);
-    heroBg.style.transform      = `translateY(${y * 0.08}px)`;
-    heroTitle.style.transform   = `translateY(${y * 0.22}px)`;
-    heroTagline.style.transform = `translateY(${y * 0.28}px)`;
-    if (scSvg) scSvg.style.transform = `translateY(${y * 0.38}px) rotateZ(${y * 0.018}deg)`;
-    if (cbSvg) cbSvg.style.transform = `translateY(${y * 0.32}px) rotateZ(${-y * 0.012}deg)`;
-
-    galleryItems.forEach(item => {
-      const speed = parseFloat(item.dataset.parallax);
-      const rect  = item.getBoundingClientRect();
-      const mid   = window.innerHeight / 2 - rect.top - rect.height / 2;
-      item.style.transform = `translateY(${mid * speed}px)`;
-    });
-    scrollTick = false;
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('scroll',()=>{ if(!tick){ requestAnimationFrame(doScroll); tick=true; } },{passive:true});
 
   /* ── INTERSECTION OBSERVER ── */
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
   /* ── SERVICE CARD TILT ── */
-  document.querySelectorAll('.service-card[data-tilt]').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r  = card.getBoundingClientRect();
-      const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-      const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-      card.style.transform = `perspective(800px) rotateX(${-dy * 9}deg) rotateY(${dx * 9}deg) translateZ(28px)`;
-    });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  document.querySelectorAll('.svc-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{ const r=card.getBoundingClientRect(); const dx=(e.clientX-r.left-r.width/2)/(r.width/2); const dy=(e.clientY-r.top-r.height/2)/(r.height/2); card.style.transform=`perspective(700px) rotateX(${-dy*7}deg) rotateY(${dx*7}deg) translateZ(20px) translateY(-4px)`; });
+    card.addEventListener('mouseleave',()=>{ card.style.transform=''; });
   });
 
-  /* ── BURGER MENU ── */
-  document.getElementById('burger').addEventListener('click', () => {
-    document.getElementById('nav-links').classList.toggle('open');
-  });
-  document.querySelectorAll('#nav-links a').forEach(a =>
-    a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'))
-  );
-
-  /* ── FORM ── */
-  window.handleSubmit = function(e) {
-    e.preventDefault();
-    const toast = document.getElementById('form-toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4200);
-    e.target.reset();
-  };
-
-  /* ── MIN DATE ── */
-  const d = document.getElementById('appt-date');
-  if (d) d.min = new Date().toISOString().split('T')[0];
+  /* ── BURGER ── */
+  document.getElementById('burger').addEventListener('click',()=>document.getElementById('nav-links').classList.toggle('open'));
+  document.querySelectorAll('#nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nav-links').classList.remove('open')));
 
 })();
 </script>
