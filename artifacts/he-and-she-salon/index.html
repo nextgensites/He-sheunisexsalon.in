@@ -55,8 +55,17 @@
       will-change: left,top;
     }
 
-    /* ── PARTICLES ── */
-    #pc { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .45; }
+    /* ── 3D BG CANVAS ── */
+    #bg3d { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+    /* ── SECTION SEMI-TRANSPARENCY (lets 3D bg bleed through) ── */
+    #about        { background: rgba(17,17,17,.86)  !important; }
+    #services     { background: rgba(10,10,10,.84)  !important; }
+    #gallery      { background: rgba(17,17,17,.86)  !important; }
+    #why          { background: rgba(10,10,10,.84)  !important; }
+    #reviews      { background: rgba(17,17,17,.86)  !important; }
+    #contact      { background: rgba(10,10,10,.84)  !important; }
+    footer        { background: rgba(10,10,10,.92)  !important; }
 
     /* ── FLOATING WA BUTTON ── */
     #wa-float {
@@ -485,11 +494,11 @@
   </div>
 </div>
 
+<!-- 3D BACKGROUND -->
+<canvas id="bg3d"></canvas>
 <!-- CURSOR -->
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
-<!-- PARTICLES -->
-<canvas id="pc"></canvas>
 
 <!-- ▒▒ FLOATING WHATSAPP ▒▒ -->
 <a id="wa-float" href="https://wa.me/917975446634?text=Hi%2C%20I%27d%20like%20to%20book%20an%20appointment%20at%20He%20%26%20She%20Unisex%20Salon!" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
@@ -1019,6 +1028,7 @@
 <!-- ══════════════════════════════════════
      JAVASCRIPT
 ══════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
 
@@ -1033,22 +1043,179 @@
     el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(201,169,110,.55)'; dot.style.transform='translate(-50%,-50%) scale(1)'; });
   });
 
-  /* ── PARTICLES ── */
-  const cv=document.getElementById('pc'),ctx=cv.getContext('2d');
-  function rsz(){ cv.width=innerWidth; cv.height=innerHeight; }
-  rsz(); addEventListener('resize',rsz,{passive:true});
-  const PS=[], N=110;
-  function mkP(){ return { x:Math.random()*cv.width, y:Math.random()*cv.height, r:Math.random()*1.3+.3, vx:(Math.random()-.5)*.15, vy:-(Math.random()*.14+.04), a:Math.random()*.45+.1, c:Math.random()>.5?'201,169,110':'183,110,121', life:0, ml:Math.random()*300+180 }; }
-  for(let i=0;i<N;i++){ const p=mkP(); p.life=Math.floor(Math.random()*p.ml); PS.push(p); }
-  (function drawP(){
-    ctx.clearRect(0,0,cv.width,cv.height);
-    for(const p of PS){ p.x+=p.vx; p.y+=p.vy; p.life++;
-      if(p.life>p.ml||p.y<-10||p.x<-10||p.x>cv.width+10){ Object.assign(p,mkP()); p.y=cv.height+5; p.life=0; }
-      const fade=1-Math.abs(p.life/p.ml-.5)*2;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(${p.c},${p.a*fade})`; ctx.fill();
+  /* ── THREE.JS 3D BACKGROUND ── */
+  (function initThree(){
+    if (typeof THREE === 'undefined') return;
+
+    const canvas = document.getElementById('bg3d');
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    } catch(e) { return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 600);
+    cam.position.set(0, 0, 38);
+
+    function onResize() {
+      renderer.setSize(innerWidth, innerHeight);
+      cam.aspect = innerWidth / innerHeight;
+      cam.updateProjectionMatrix();
     }
-    requestAnimationFrame(drawP);
+    onResize();
+    addEventListener('resize', onResize, { passive: true });
+
+    /* ── palette ── */
+    const GOLD  = new THREE.Color(0xc9a96e);
+    const GOLDD = new THREE.Color(0x9e7d46);
+    const ROSE  = new THREE.Color(0xb76e79);
+
+    /* ─── TORUS RINGS (gold hair‑rings / jewellery) ─── */
+    const rings = [];
+    const ringSizes = [
+      [3.8, 0.055], [2.6, 0.048], [1.8, 0.042], [4.5, 0.06],
+      [1.4, 0.038], [3.1, 0.052], [2.2, 0.045], [5.0, 0.065],
+      [1.6, 0.040], [2.8, 0.050], [3.4, 0.055], [1.2, 0.036],
+      [4.0, 0.058], [2.0, 0.044],
+    ];
+    ringSizes.forEach(([r, tube], i) => {
+      const geo = new THREE.TorusGeometry(r, tube, 20, 80);
+      const col = i % 3 === 0 ? ROSE : (i % 3 === 1 ? GOLD : GOLDD);
+      const mat = new THREE.MeshBasicMaterial({
+        color: col, transparent: true,
+        opacity: 0.10 + Math.random() * 0.18,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(
+        (Math.random() - 0.5) * 72,
+        (Math.random() - 0.5) * 130,
+        (Math.random() - 0.5) * 22 - 4,
+      );
+      mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+      scene.add(mesh);
+      rings.push({ mesh, rx: (Math.random() - 0.5) * 0.004, ry: (Math.random() - 0.5) * 0.003 });
+    });
+
+    /* ─── WIREFRAME DIAMONDS / GEMS (octahedrons) ─── */
+    const gems = [];
+    for (let i = 0; i < 22; i++) {
+      const sz = 0.28 + Math.random() * 1.1;
+      const geo = new THREE.OctahedronGeometry(sz, 0);
+      const col = i % 2 === 0 ? GOLD : ROSE;
+      const mat = new THREE.MeshBasicMaterial({
+        color: col, wireframe: true, transparent: true,
+        opacity: 0.12 + Math.random() * 0.22,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(
+        (Math.random() - 0.5) * 76,
+        (Math.random() - 0.5) * 130,
+        (Math.random() - 0.5) * 20 - 2,
+      );
+      mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+      scene.add(mesh);
+      gems.push({ mesh, speed: 0.004 + Math.random() * 0.008 });
+    }
+
+    /* ─── LARGE WIREFRAME ICOSAHEDRONS (subtle luxury shapes) ─── */
+    const icos = [];
+    [[5.5, GOLD, 0.045], [4.2, ROSE, 0.038], [6.8, GOLDD, 0.032]].forEach(([sz, col, op]) => {
+      const geo = new THREE.IcosahedronGeometry(sz, 1);
+      const mat = new THREE.MeshBasicMaterial({ color: col, wireframe: true, transparent: true, opacity: op });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set((Math.random() - 0.5) * 50, (Math.random() - 0.5) * 120, -18 - Math.random() * 8);
+      scene.add(mesh);
+      icos.push({ mesh, speed: 0.0008 + Math.random() * 0.001 });
+    });
+
+    /* ─── FLOATING LINE PAIRS (scissors / blades) ─── */
+    function makeBlade(x, y, z, angle, col) {
+      const pts = [new THREE.Vector3(-2.8, 0, 0), new THREE.Vector3(2.8, 0, 0)];
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const mat = new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.18 });
+      const line = new THREE.Line(geo, mat);
+      line.position.set(x, y, z);
+      line.rotation.z = angle;
+      scene.add(line);
+      return line;
+    }
+    const blades = [];
+    for (let i = 0; i < 10; i++) {
+      const x = (Math.random() - 0.5) * 70;
+      const y = (Math.random() - 0.5) * 130;
+      const z = (Math.random() - 0.5) * 14;
+      const col = i % 2 === 0 ? GOLD : ROSE;
+      const a = Math.random() * Math.PI;
+      const b1 = makeBlade(x, y, z, a, col);
+      const b2 = makeBlade(x, y, z + 0.4, a + 0.18, col);
+      blades.push({ b1, b2, speed: (Math.random() - 0.5) * 0.003 });
+    }
+
+    /* ─── PARTICLES (Points) ─── */
+    const PCOUNT = 1800;
+    const pPos = new Float32Array(PCOUNT * 3);
+    const pCol = new Float32Array(PCOUNT * 3);
+    for (let i = 0; i < PCOUNT; i++) {
+      pPos[i * 3]     = (Math.random() - 0.5) * 100;
+      pPos[i * 3 + 1] = (Math.random() - 0.5) * 160;
+      pPos[i * 3 + 2] = (Math.random() - 0.5) * 30 - 8;
+      const c = Math.random() > 0.45 ? GOLD : ROSE;
+      pCol[i * 3] = c.r; pCol[i * 3 + 1] = c.g; pCol[i * 3 + 2] = c.b;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
+    const pMat = new THREE.PointsMaterial({ size: 0.18, vertexColors: true, transparent: true, opacity: 0.55 });
+    scene.add(new THREE.Points(pGeo, pMat));
+
+    /* ─── SCROLL + MOUSE camera drift ─── */
+    let targetY = 0, currentY = 0;
+    let mouseX = 0, mouseY = 0;
+    addEventListener('scroll', () => { targetY = -scrollY * 0.022; }, { passive: true });
+    addEventListener('mousemove', e => {
+      mouseX = (e.clientX / innerWidth  - 0.5) * 3.5;
+      mouseY = (e.clientY / innerHeight - 0.5) * 2.0;
+    }, { passive: true });
+
+    /* ─── ANIMATE ─── */
+    (function animate() {
+      requestAnimationFrame(animate);
+      const t = performance.now() * 0.001;
+
+      /* smooth camera scroll */
+      currentY += (targetY - currentY) * 0.045;
+      cam.position.y  = currentY + Math.sin(t * 0.18) * 0.4;
+      cam.position.x += (mouseX - cam.position.x) * 0.028;
+
+      /* idle ring rotation */
+      rings.forEach(({ mesh, rx, ry }) => {
+        mesh.rotation.x += rx;
+        mesh.rotation.y += ry;
+      });
+
+      /* gems spin */
+      gems.forEach(({ mesh, speed }) => {
+        mesh.rotation.x += speed;
+        mesh.rotation.y += speed * 0.7;
+        mesh.rotation.z += speed * 0.4;
+      });
+
+      /* icos slow drift */
+      icos.forEach(({ mesh, speed }) => {
+        mesh.rotation.y += speed;
+        mesh.rotation.x += speed * 0.6;
+      });
+
+      /* blades gentle rotate */
+      blades.forEach(({ b1, b2, speed }) => {
+        b1.rotation.z += speed;
+        b2.rotation.z += speed * 0.85;
+      });
+
+      renderer.render(scene, cam);
+    })();
   })();
 
   /* ── SCROLL PARALLAX + NAV ── */
